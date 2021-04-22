@@ -49,7 +49,7 @@
       opacity: 0.3;
       }
       .main-block {
-      max-width: 340px; 
+      max-width: 500px; 
       min-height: 460px; 
       padding: 10px 0;
       margin: auto;
@@ -106,7 +106,7 @@
       input[type=radio]:checked + label:after {
       opacity: 1;
       }
-      input[type=text], input[type=password], textarea {
+      input[type=text], input[type=password], textarea, input[type=date] {
       width: calc(100% - 57px);
       height: 36px;
       margin: 13px 0 0 -5px;
@@ -166,17 +166,19 @@
         function controllo(){
             if(document.getElementById("footballer").checked){
               document.getElementById("footdiv").style.display="block";
-              document.getElementById("rolediv").style.display="block";
+              document.getElementById("labelruolo").innerHTML="Ruoli preferiti";
               document.getElementById("biodiv").style.display="block";
               document.getElementById("hismaxdiv").style.display="block";
-              document.getElementById("hislastdiv").style.display="block";
+              document.getElementById("nomi").style.display="block";
+              document.getElementById("nomisoc").style.display="none";
             }
             else{
               document.getElementById("footdiv").style.display="none";
-              document.getElementById("rolediv").style.display="none";
+              document.getElementById("labelruolo").innerHTML="Ruoli ricercati";
               document.getElementById("biodiv").style.display="none";
               document.getElementById("hismaxdiv").style.display="none";
-              document.getElementById("hislastdiv").style.display="none";
+              document.getElementById("nomi").style.display="none";
+              document.getElementById("nomisoc").style.display="block";
             }
         }
         function controllaDoppi(testo){
@@ -320,6 +322,15 @@
             }
           }
         }
+        function confermaPass(){
+          if(document.getElementById("password").value!==document.getElementById("password2").value){
+            document.getElementById("password").focus();
+            document.getElementById("nomi").focus();
+            document.getElementById("password").value="";
+            document.getElementById("password2").value="";
+            document.getElementById("perrata").style.display="inline-block";
+          }
+        }
     </script>
   </head>
 
@@ -337,16 +348,27 @@
           </div>
           <hr>
           <h3 style="text-align: center;">Informazioni</h3><br>
+          <div id="nomisoc">
+          <label id="icon" for="names"><i class="fas fa-address-card"></i></label>
+          <input type="text" name="names" id="names" placeholder="Nome società" required/>
+          </div>
+          <div id="nomi">
           <label id="icon" for="name"><i class="fas fa-address-card"></i></label>
           <input type="text" name="name" id="name" placeholder="Nome" required/>
           <label id="icon" for="surname"><i class="fas fa-address-card"></i></label>
           <input type="text" name="surname" id="surname" placeholder="Cognome" required/>
+          <label id="icon" for="data"><i class="fas fa-calendar"></i></label>
+          <input type="date" name="data" id="data" required/>
+          </div>
           <label id="icon" for="email"><i class="fas fa-envelope"></i></label>
           <input type="text" name="email" id="email" placeholder="Email" required/>
           <label id="icon" for="username"><i class="fas fa-user"></i></label>
           <input type="text" name="username" id="username" placeholder="Username" required/>
           <label id="icon" for="password"><i class="fas fa-unlock-alt"></i></label>
           <input type="password" name="password" id="password" placeholder="Password" required/>
+          <label id="icon" for="password2"><i class="fas fa-unlock-alt"></i></label>
+          <input type="password" name="password2" id="password2" placeholder="Conferma password" required/>
+          <p id="perrata" style="color: red; display: none;">Le password inserite non corrispondono. Reinserirle</p><br>
           <hr>
           <h3 style="text-align: center;">Indirizzo</h3><br>
           <label id="icon" for="city"><i class="fas fa-location-arrow"></i></label>
@@ -368,7 +390,7 @@
           </div>
           <div class="role-type" style="text-align: center;" id="rolediv">
             <hr>
-            <h3 style="text-align: center;">Ruoli preferiti</h3><br>
+            <h3 style="text-align: center;" id="labelruolo">Ruoli preferiti</h3><br>
             <select name="rolegroup" id="rolegroup" style="max-width: 100%;" onchange="showRuoli()"><br>
               <option>Portiere</option>
               <option>Difensore</option>
@@ -415,7 +437,7 @@
             </select>
           </div>
           <div class="btn-block">
-            <input type="button" value="Registrati" onclick="">
+            <input type="button" value="Registrati" onclick="confermaPass()">
           </div>
         </form>
       </div>    
