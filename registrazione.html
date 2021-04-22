@@ -330,12 +330,17 @@
             document.getElementById("password").value="";
             document.getElementById("password2").value="";
             document.getElementById("perrata").style.display="inline-block";
+            document.getElementById("psbagliata").style.display="none";
           }
           else if(!document.getElementById("password").value.match(regolaPassword)) {
-            alert("non accettabile");
+            document.getElementById("password").focus();
+            document.getElementById("nomi").focus();
+            document.getElementById("password").value="";
+            document.getElementById("password2").value="";
+            document.getElementById("psbagliata").style.display="inline-block";
+            document.getElementById("perrata").style.display="none";
           } 
           else {
-            alert("accettabile");
           }
         }
     </script>
