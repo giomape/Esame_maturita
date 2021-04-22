@@ -156,6 +156,7 @@
 
     <script>
         var messi=[];
+        const regolaPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
 
         function clearOption(Select_toclear) {
           var o = Select_toclear.options.length - 1;
@@ -330,6 +331,12 @@
             document.getElementById("password2").value="";
             document.getElementById("perrata").style.display="inline-block";
           }
+          else if(!document.getElementById("password").value.match(regolaPassword)) {
+            alert("non accettabile");
+          } 
+          else {
+            alert("accettabile");
+          }
         }
     </script>
   </head>
@@ -369,6 +376,7 @@
           <label id="icon" for="password2"><i class="fas fa-unlock-alt"></i></label>
           <input type="password" name="password2" id="password2" placeholder="Conferma password" required/>
           <p id="perrata" style="color: red; display: none;">Le password inserite non corrispondono. Reinserirle</p><br>
+          <p id="psbagliata" style="color: red; display: none;">La password deve essere di almeno 8 caratteri e contenere almeno un numero</p><br>
           <hr>
           <h3 style="text-align: center;">Indirizzo</h3><br>
           <label id="icon" for="city"><i class="fas fa-location-arrow"></i></label>
