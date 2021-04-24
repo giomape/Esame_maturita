@@ -164,6 +164,25 @@
               Select_toclear.remove(i);
           }
         }
+        function inserisciDati(){
+          confermaPass();
+          ottieniDatiCorretti();
+          if(document.getElementById("footballer").checked){
+            var xhr = new XMLHttpRequest();
+          var url="registrazione_calciatore.php";
+          var params="nome="+encodeURIComponent(document.getElementById("name").value)+"&cognome="+encodeURIComponent(document.getElementById("surname").value)+"&data_nascita="+encodeURIComponent(document.getElementById("data").value)+"&email="+encodeURIComponent(document.getElementById("email").value)+"&username="+encodeURIComponent(document.getElementById("username").value)+"&password="+encodeURIComponent(document.getElementById("password").value)+"&nome_residenza="+encodeURIComponent(document.getElementById("city").value)+", "+encodeURIComponent(document.getElementById("street").value)+"&latitudine="+encodeURIComponent(latitudine)+"&longitudine="+encodeURIComponent(longitudine)+"&piede="+encodeURIComponent(piede)+"&biografia="+encodeURIComponent(document.getElementById("bio").value)+"&max_serie="+encodeURIComponent(maxserietext)+"&current_serie="+encodeURIComponent(currentserietext);
+          xhr.open("POST", url, true);
+          xhr.onreadystatechange = function () {
+            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+
+            }
+          }
+          xhr.send(params);
+          }
+          else{
+
+          }
+        }
         function controllo(){
             if(document.getElementById("footballer").checked){
               document.getElementById("footdiv").style.display="block";
@@ -172,6 +191,7 @@
               document.getElementById("hismaxdiv").style.display="block";
               document.getElementById("nomi").style.display="block";
               document.getElementById("nomisoc").style.display="none";
+              document.getElementById("city").placeholder="Località di residenza";
             }
             else{
               document.getElementById("footdiv").style.display="none";
@@ -180,6 +200,7 @@
               document.getElementById("hismaxdiv").style.display="none";
               document.getElementById("nomi").style.display="none";
               document.getElementById("nomisoc").style.display="block";
+              document.getElementById("city").placeholder="Località di sede";
             }
         }
         function controllaDoppi(testo){
@@ -193,6 +214,30 @@
           else
             return false;
         }
+
+        var place;
+        var longitudine;
+        var latitudine;
+        var piede;
+        var maxserietext;
+        var currentserietext;
+
+        function ottieniDatiCorretti(){
+          let scelta=document.getElementById("res").value;
+          longitudine=place[scelta].lon;
+          latitudine=place[scelta].lat;
+          if(document.getElementById("sinistro").checked){
+            piede="sinistro";
+          }
+          else{
+            piede="destro";
+          }
+          var sel = document.getElementById("maxserie");
+          maxserietext= sel.options[sel.selectedIndex].text;
+          var sel = document.getElementById("lastserie");
+          currentserietext= sel.options[sel.selectedIndex].text;
+        }
+
         function getAddress(){
           messi=[];
           document.getElementById("res").style.display="block";
@@ -204,32 +249,32 @@
           xhr.open("GET", url, true);
           xhr.onreadystatechange = function () {
             if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-              var results=JSON.parse(xhr.responseText);
-              console.log(results);
+              place=JSON.parse(xhr.responseText);
+              console.log(place);
               var sel=registrazione.res;
               clearOption(sel);
-              for (i=0;i<results.length;i++){
+              for (i=0;i<place.length;i++){
                   var opt=document.createElement("option");
-                  if(typeof results[i].address.road!=="undefined")
-                    opt.innerText=results[i].address.road+",";
-                  if(typeof results[i].address.farmyard!=="undefined")
-                    opt.innerText+=results[i].address.farmyard+",";
-                  if(typeof results[i].address.quarter!=="undefined")
-                    opt.innerText+=results[i].address.quarter+",";
-                  if(typeof results[i].address.suburb!=="undefined")
-                    opt.innerText+=results[i].address.suburb+",";
-                  if(typeof results[i].address.village!=="undefined")
-                    opt.innerText+=results[i].address.village+",";
-                  if(typeof results[i].address.town!=="undefined")
-                    opt.innerText+=results[i].address.town+",";
-                  if(typeof results[i].address.city!=="undefined")
-                    opt.innerText+=results[i].address.city+",";
-                  if(typeof results[i].address.province!=="undefined")
-                    opt.innerText+=results[i].address.province+",";
-                  if(typeof results[i].address.state!=="undefined")
-                    opt.innerText+=results[i].address.state+",";
-                  if(typeof results[i].address.country!=="undefined")
-                    opt.innerText+=results[i].address.country+",";
+                  if(typeof place[i].address.road!=="undefined")
+                    opt.innerText=place[i].address.road+",";
+                  if(typeof place[i].address.farmyard!=="undefined")
+                    opt.innerText+=place[i].address.farmyard+",";
+                  if(typeof place[i].address.quarter!=="undefined")
+                    opt.innerText+=place[i].address.quarter+",";
+                  if(typeof place[i].address.suburb!=="undefined")
+                    opt.innerText+=place[i].address.suburb+",";
+                  if(typeof place[i].address.village!=="undefined")
+                    opt.innerText+=place[i].address.village+",";
+                  if(typeof place[i].address.town!=="undefined")
+                    opt.innerText+=place[i].address.town+",";
+                  if(typeof place[i].address.city!=="undefined")
+                    opt.innerText+=place[i].address.city+",";
+                  if(typeof place[i].address.province!=="undefined")
+                    opt.innerText+=place[i].address.province+",";
+                  if(typeof place[i].address.state!=="undefined")
+                    opt.innerText+=place[i].address.state+",";
+                  if(typeof place[i].address.country!=="undefined")
+                    opt.innerText+=place[i].address.country+",";
                   opt.setAttribute("value",i);
                   if(controllaDoppi(opt.innerText)){
                     messi[i]=opt.innerText;
@@ -331,6 +376,7 @@
             document.getElementById("password2").value="";
             document.getElementById("perrata").style.display="inline-block";
             document.getElementById("psbagliata").style.display="none";
+            return;
           }
           else if(!document.getElementById("password").value.match(regolaPassword)) {
             document.getElementById("password").focus();
@@ -339,6 +385,7 @@
             document.getElementById("password2").value="";
             document.getElementById("psbagliata").style.display="inline-block";
             document.getElementById("perrata").style.display="none";
+            return;
           } 
           else {
           }
@@ -450,7 +497,7 @@
             </select>
           </div>
           <div class="btn-block">
-            <input type="button" value="Registrati" onclick="confermaPass()">
+            <input type="button" value="Registrati" onclick="inserisciDati()">
           </div>
         </form>
       </div>    

@@ -1,6 +1,6 @@
 <?php
 try {
-	$hostname = "localhost";
+	  $hostname = "localhost";
     $dbname = "progetto";
     $user = "root";
     $pass = "";
