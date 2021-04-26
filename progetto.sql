@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Apr 22, 2021 alle 13:27
--- Versione del server: 10.1.38-MariaDB
--- Versione PHP: 7.3.2
+-- Creato il: Apr 26, 2021 alle 13:54
+-- Versione del server: 10.1.37-MariaDB
+-- Versione PHP: 7.3.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -37,13 +37,21 @@ CREATE TABLE `calciatori` (
   `username` varchar(50) NOT NULL,
   `password` varchar(500) NOT NULL,
   `nome_residenza` varchar(255) NOT NULL,
-  `latitudine` decimal(10,0) NOT NULL,
-  `longitudine` decimal(10,0) NOT NULL,
+  `latitudine` decimal(10,6) NOT NULL,
+  `longitudine` decimal(10,6) NOT NULL,
   `piede` varchar(40) NOT NULL,
   `biografia` varchar(500) NOT NULL,
   `max_serie` varchar(50) NOT NULL,
   `current_serie` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dump dei dati per la tabella `calciatori`
+--
+
+INSERT INTO `calciatori` (`id_calciatore`, `nome`, `cognome`, `data_nascita`, `email`, `username`, `password`, `nome_residenza`, `latitudine`, `longitudine`, `piede`, `biografia`, `max_serie`, `current_serie`) VALUES
+(2, 'Mario', 'Rossi', '1999-06-13', 'mariorossi@gmail.com', 'mario_rossi', '$2y$10$N3HdPGt4mMdblWT4ctQTZe3vT.gMeKBdRt.KnnLOck.5l3o8xaHmy', 'bergamo, gavazzeni', '45.687747', '9.672395', 'destro', 'ciao sono un calciatore', 'Eccellenza', 'Eccellenza'),
+(3, 'Marco', 'Traini', '2002-10-09', 'marcotraini@gmail.com', 'marco123', '$2y$10$HSJEh5T69XE4Dj10gQbcI.Ibe1KQqh.SH67u44rQbReFwBFv8.UBe', 'san pellegrino, medici ', '45.832931', '9.665785', 'destro', 'ciao sono marco e sono molto forte', 'Serie A', 'Terza categoria');
 
 -- --------------------------------------------------------
 
@@ -96,13 +104,21 @@ INSERT INTO `ruoli` (`id_ruolo`, `nome`, `gruppo`) VALUES
 CREATE TABLE `societa` (
   `id_societa` int(11) NOT NULL,
   `nome` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(500) NOT NULL,
   `nome_residenza` varchar(255) NOT NULL,
-  `latitudine` decimal(10,0) NOT NULL,
-  `longitudine` decimal(10,0) NOT NULL,
+  `latitudine` decimal(10,6) NOT NULL,
+  `longitudine` decimal(10,6) NOT NULL,
   `current_serie` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dump dei dati per la tabella `societa`
+--
+
+INSERT INTO `societa` (`id_societa`, `nome`, `email`, `username`, `password`, `nome_residenza`, `latitudine`, `longitudine`, `current_serie`) VALUES
+(2, 'Telgate', 'telgate@gmail.com', 'telgate_fc', '$2y$10$n7IyH2ikVZg40riefxnGpOc06bT7WFfHt1RB5z39VJ/8qsxi2HeAm', 'telgate, dante', '46.000000', '10.000000', 'Terza categoria');
 
 -- --------------------------------------------------------
 
@@ -159,7 +175,7 @@ ALTER TABLE `societa_ruoli`
 -- AUTO_INCREMENT per la tabella `calciatori`
 --
 ALTER TABLE `calciatori`
-  MODIFY `id_calciatore` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_calciatore` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT per la tabella `ruoli`
@@ -171,7 +187,7 @@ ALTER TABLE `ruoli`
 -- AUTO_INCREMENT per la tabella `societa`
 --
 ALTER TABLE `societa`
-  MODIFY `id_societa` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_societa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Limiti per le tabelle scaricate
