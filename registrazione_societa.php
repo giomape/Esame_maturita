@@ -1,16 +1,19 @@
 <?php
 
-$nome=$_POST["nome"];
-$email=$_POST["email"];
-$username=$_POST["username"];
-$password=$_POST["password"];
-$nome_residenza=$_POST["nome_residenza"];
-$latitudine=$_POST["latitudine"];
-$longitudine=$_POST["longitudine"];
-$current_serie=$_POST["current_serie"];
+$data=json_decode(file_get_contents('php://input'),1);
+
+$nome=$data["nome"];
+$email=$data["email"];
+$username=$data["username"];
+$inpass=$data["password"];
+$password=password_hash($inpass, PASSWORD_BCRYPT);
+$nome_residenza=$data["nome_residenza"];
+$latitudine=$data["latitudine"];
+$longitudine=$data["longitudine"];
+$current_serie=$data["current_serie"];
 
 try {
-	$hostname = "localhost";
+	  $hostname = "localhost";
     $dbname = "progetto";
     $user = "root";
     $pass = "";
@@ -20,14 +23,13 @@ try {
 }
 
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-$sql = "INSERT INTO `societa`(`id_societa`, `nome`, `email`, `username`, `password`, `nome_residenza`, `latitudine`, `longitudine`, `current_serie`) VALUES (?,?,?,?,?,?,?,?,?)";
+$sql = "INSERT INTO `societa`(`nome`, `email`, `username`, `password`, `nome_residenza`, `latitudine`, `longitudine`, `current_serie`) VALUES (?,?,?,?,?,?,?,?)";
 
 
 try
 { 
   $stmt = $db->prepare($sql);
-  $stmt->bind_param(NULL, '$nome', '$email', '$username', '$password', '$nome_residenza', '$latitudine', '$longitudine', '$current_serie');
-  $stmt->execute();
+  $stmt->execute([$nome, $email, $username, $password, $nome_residenza, $latitudine, $longitudine, $current_serie]);
 }
 catch(PDOException $e)
 {

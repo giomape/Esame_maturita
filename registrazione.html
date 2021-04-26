@@ -169,18 +169,50 @@
           ottieniDatiCorretti();
           if(document.getElementById("footballer").checked){
             var xhr = new XMLHttpRequest();
-          var url="registrazione_calciatore.php";
-          var params="nome="+encodeURIComponent(document.getElementById("name").value)+"&cognome="+encodeURIComponent(document.getElementById("surname").value)+"&data_nascita="+encodeURIComponent(document.getElementById("data").value)+"&email="+encodeURIComponent(document.getElementById("email").value)+"&username="+encodeURIComponent(document.getElementById("username").value)+"&password="+encodeURIComponent(document.getElementById("password").value)+"&nome_residenza="+encodeURIComponent(document.getElementById("city").value)+", "+encodeURIComponent(document.getElementById("street").value)+"&latitudine="+encodeURIComponent(latitudine)+"&longitudine="+encodeURIComponent(longitudine)+"&piede="+encodeURIComponent(piede)+"&biografia="+encodeURIComponent(document.getElementById("bio").value)+"&max_serie="+encodeURIComponent(maxserietext)+"&current_serie="+encodeURIComponent(currentserietext);
-          xhr.open("POST", url, true);
-          xhr.onreadystatechange = function () {
-            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+            var url="registrazione_calciatore.php";
+            const params=JSON.stringify({
+              nome: document.getElementById("name").value,
+              cognome: document.getElementById("surname").value,
+              data_nascita: document.getElementById("data").value,
+              email: document.getElementById("email").value, 
+              username: document.getElementById("username").value,
+              password: document.getElementById("password").value,
+              nome_residenza: document.getElementById("city").value+", "+document.getElementById("street").value,
+              latitudine: latitudine,
+              longitudine: longitudine,
+              piede: piede,
+              biografia: document.getElementById("bio").value,
+              max_serie: maxserietext,
+              current_serie: currentserietext
+            });
+            xhr.open("POST", url, true);
+            xhr.onreadystatechange = function () {
+              if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
 
+              }
             }
-          }
-          xhr.send(params);
+            xhr.send(params);
           }
           else{
+            var xhr = new XMLHttpRequest();
+            var url="registrazione_societa.php";
+            const params=JSON.stringify({
+              nome: document.getElementById("names").value,
+              email: document.getElementById("email").value, 
+              username: document.getElementById("username").value,
+              password: document.getElementById("password").value,
+              nome_residenza: document.getElementById("city").value+", "+document.getElementById("street").value,
+              latitudine: latitudine,
+              longitudine: longitudine,
+              current_serie: currentserietext
+            });
+            xhr.open("POST", url, true);
+            xhr.onreadystatechange = function () {
+              if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
 
+              }
+            }
+            xhr.send(params);
           }
         }
         function controllo(){
@@ -250,7 +282,6 @@
           xhr.onreadystatechange = function () {
             if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
               place=JSON.parse(xhr.responseText);
-              console.log(place);
               var sel=registrazione.res;
               clearOption(sel);
               for (i=0;i<place.length;i++){
