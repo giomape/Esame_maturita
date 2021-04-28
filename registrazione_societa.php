@@ -26,7 +26,7 @@ $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $sql = "INSERT INTO `societa`(`nome`, `email`, `username`, `password`, `nome_residenza`, `latitudine`, `longitudine`, `current_serie`) VALUES (?,?,?,?,?,?,?,?)";
 
 
-try
+/*try
 { 
   $stmt = $db->prepare($sql);
   $stmt->execute([$nome, $email, $username, $password, $nome_residenza, $latitudine, $longitudine, $current_serie]);
@@ -34,6 +34,6 @@ try
 catch(PDOException $e)
 {
   echo $e;
-}
+}*/
 http_response_code(200);
 ?>

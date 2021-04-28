@@ -164,6 +164,117 @@
               Select_toclear.remove(i);
           }
         }
+        var conta;
+
+        function contolloRequired(){
+          conta = false;
+          if(document.getElementById("footballer").checked){
+            if(document.getElementById("name").value=="")
+              conta=true;
+            else if(document.getElementById("surname").value=="")
+              conta=true;
+            else if(document.getElementById("data").value=="")
+              conta=true;
+            else if(document.getElementById("email").value=="")
+              conta=true;
+            else if(document.getElementById("username").value=="")
+              conta=true;
+            else if(document.getElementById("password").value=="")
+              conta=true;
+            else if(document.getElementById("password2").value=="")
+              conta=true;
+            else if(document.getElementById("city").value=="")
+              conta=true;
+            else if(document.getElementById("street").value=="")
+              conta=true;
+            else if(document.getElementById("bio").value=="")
+              conta=true;
+          }
+          else{
+            if(document.getElementById("names").value=="")
+              conta=true;
+            else if(document.getElementById("email").value=="")
+              conta=true;
+            else if(document.getElementById("username").value=="")
+              conta=true;
+            else if(document.getElementById("password").value=="")
+              conta=true;
+            else if(document.getElementById("password2").value=="")
+              conta=true;
+            else if(document.getElementById("city").value=="")
+              conta=true;
+            else if(document.getElementById("street").value=="")
+              conta=true;
+          }
+          if(conta==false)
+            almenounRuolo();
+          if(conta==true){
+            document.getElementById("required").style.display="inline-block";
+            document.getElementById("username").focus();
+          }
+          else{
+            document.getElementById("required").style.display="none";
+            inserisciDati();
+          }
+        }
+
+        function almenounRuolo(){
+          let contatore=0;
+          for(var i=1; i<=13;i++){
+            if(document.getElementById(i).checked)
+              contatore++;
+          }
+          if(contatore==0)
+            conta=true;
+          else
+            conta=false;
+        }
+
+        var ruoli=[];
+        function prendiRuoli(){
+          ruoli=[];
+          for(var i=1; i<=13;i++){
+            if(document.getElementById(i).checked)
+              ruoli.push(i);
+          }
+        }
+
+        function inviaRuoli(){
+          prendiRuoli();
+          if(document.getElementById("footballer").checked){
+            var xhr = new XMLHttpRequest();
+            var url="inserimentoruoli_calciatore.php";
+            const params=JSON.stringify({
+              ruoli: ruoli,
+              username: document.getElementById("username").value
+            });
+            console.log(params);
+            xhr.open("POST", url, true);
+            xhr.onreadystatechange = function () {
+              if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+
+              }
+            }
+            xhr.send(params);
+          }
+          else{
+            var xhr = new XMLHttpRequest();
+            var url="inserimentoruoli_societa.php";
+            const params=JSON.stringify({
+              ruoli: ruoli,
+              username: document.getElementById("username").value
+            });
+            console.log(params);
+            xhr.open("POST", url, true);
+            xhr.onreadystatechange = function () {
+              if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+
+              }
+            }
+            xhr.send(params);
+          }
+        }
+
         function inserisciDati(){
           confermaPass();
           ottieniDatiCorretti();
@@ -214,6 +325,7 @@
             }
             xhr.send(params);
           }
+          inviaRuoli();
         }
         function controllo(){
             if(document.getElementById("footballer").checked){
@@ -438,6 +550,7 @@
           </div>
           <hr>
           <h3 style="text-align: center;">Informazioni</h3><br>
+          <p id="required" style="color: red; display: none;">Alcuni campi non sono stati inseriti. Completare la registrazione</p><br>
           <div id="nomisoc">
           <label id="icon" for="names"><i class="fas fa-address-card"></i></label>
           <input type="text" name="names" id="names" placeholder="Nome società" required/>
@@ -528,7 +641,7 @@
             </select>
           </div>
           <div class="btn-block">
-            <input type="button" value="Registrati" onclick="inserisciDati()">
+            <input type="button" value="Registrati" onclick="contolloRequired()">
           </div>
         </form>
       </div>    
