@@ -16,6 +16,7 @@ $piede=$data["piede"];
 $biografia=$data["biografia"];
 $max_serie=$data["max_serie"];
 $current_serie=$data["current_serie"];
+$ruoli=$data["ruoli"];
 
 try {
 	  $hostname = "localhost";
@@ -31,7 +32,7 @@ $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $sql = "INSERT INTO `calciatori`(`nome`, `cognome`, `data_nascita`, `email`, `username`, `password`, `nome_residenza`, `latitudine`, `longitudine`, `piede`, `biografia`, `max_serie`, `current_serie`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 
-/*try
+try
 { 
   $stmt = $db->prepare($sql);
   $stmt->execute([$nome, $cognome, $data_nascita, $email, $username, $password, $nome_residenza, $latitudine, $longitudine, $piede, $biografia, $max_serie, $current_serie]);
@@ -39,6 +40,47 @@ $sql = "INSERT INTO `calciatori`(`nome`, `cognome`, `data_nascita`, `email`, `us
 catch(PDOException $e)
 {
   echo $e;
-}*/
+}
+
+$sql = "SELECT id_calciatore FROM calciatori WHERE username='$username'";
+
+
+try
+{ 
+  $stmt = $db->prepare($sql);
+  $stmt->execute();
+}
+catch(PDOException $e)
+{
+  echo $e;
+}
+
+while ($data = $stmt->fetch(PDO::FETCH_ASSOC)){
+	$id=$data["id_calciatore"];
+}
+
+
+$sql = "INSERT INTO `calciatori_ruoli`(`id_calciatore`, `id_ruolo`) VALUES (?,?)";
+
+try
+{ 
+  $stmt = $db->prepare($sql);
+}
+catch(PDOException $e)
+{
+  echo $e;
+}
+
+for($i=0;$i<count($ruoli);$i++){
+  try
+  { 
+    $stmt->execute([$id, $ruoli[$i]]);
+  }
+  catch(PDOException $e)
+  {
+    echo $e;
+  }
+}
+
 http_response_code(200);
 ?>

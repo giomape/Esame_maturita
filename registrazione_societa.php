@@ -11,6 +11,7 @@ $nome_residenza=$data["nome_residenza"];
 $latitudine=$data["latitudine"];
 $longitudine=$data["longitudine"];
 $current_serie=$data["current_serie"];
+$ruoli=$data["ruoli"];
 
 try {
 	  $hostname = "localhost";
@@ -26,7 +27,7 @@ $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $sql = "INSERT INTO `societa`(`nome`, `email`, `username`, `password`, `nome_residenza`, `latitudine`, `longitudine`, `current_serie`) VALUES (?,?,?,?,?,?,?,?)";
 
 
-/*try
+try
 { 
   $stmt = $db->prepare($sql);
   $stmt->execute([$nome, $email, $username, $password, $nome_residenza, $latitudine, $longitudine, $current_serie]);
@@ -34,6 +35,47 @@ $sql = "INSERT INTO `societa`(`nome`, `email`, `username`, `password`, `nome_res
 catch(PDOException $e)
 {
   echo $e;
-}*/
+}
+
+$sql = "SELECT id_societa FROM societa WHERE username='$username'";
+
+
+try
+{ 
+  $stmt = $db->prepare($sql);
+  $stmt->execute();
+}
+catch(PDOException $e)
+{
+  echo $e;
+}
+
+while ($data = $stmt->fetch(PDO::FETCH_ASSOC)){
+	$id=$data["id_societa"];
+}
+
+
+$sql = "INSERT INTO `societa_ruoli`(`id_societa`, `id_ruolo`) VALUES (?,?)";
+
+try
+{ 
+  $stmt = $db->prepare($sql);
+}
+catch(PDOException $e)
+{
+  echo $e;
+}
+
+for($i=0;$i<count($ruoli);$i++){
+  try
+  { 
+    $stmt->execute([$id, $ruoli[$i]]);
+  }
+  catch(PDOException $e)
+  {
+    echo $e;
+  }
+}
+
 http_response_code(200);
 ?>

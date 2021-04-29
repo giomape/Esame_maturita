@@ -187,6 +187,8 @@
               conta=true;
             else if(document.getElementById("street").value=="")
               conta=true;
+            else if(document.getElementById("res").innerText=="")
+              conta=true;
             else if(document.getElementById("bio").value=="")
               conta=true;
           }
@@ -204,6 +206,8 @@
             else if(document.getElementById("city").value=="")
               conta=true;
             else if(document.getElementById("street").value=="")
+              conta=true;
+            else if(document.getElementById("res").innerText=="")
               conta=true;
           }
           if(conta==false)
@@ -239,45 +243,10 @@
           }
         }
 
-        function inviaRuoli(){
-          prendiRuoli();
-          if(document.getElementById("footballer").checked){
-            var xhr = new XMLHttpRequest();
-            var url="inserimentoruoli_calciatore.php";
-            const params=JSON.stringify({
-              ruoli: ruoli,
-              username: document.getElementById("username").value
-            });
-            console.log(params);
-            xhr.open("POST", url, true);
-            xhr.onreadystatechange = function () {
-              if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-
-              }
-            }
-            xhr.send(params);
-          }
-          else{
-            var xhr = new XMLHttpRequest();
-            var url="inserimentoruoli_societa.php";
-            const params=JSON.stringify({
-              ruoli: ruoli,
-              username: document.getElementById("username").value
-            });
-            console.log(params);
-            xhr.open("POST", url, true);
-            xhr.onreadystatechange = function () {
-              if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-
-              }
-            }
-            xhr.send(params);
-          }
-        }
-
         function inserisciDati(){
           confermaPass();
           ottieniDatiCorretti();
+          prendiRuoli();
           if(document.getElementById("footballer").checked){
             var xhr = new XMLHttpRequest();
             var url="registrazione_calciatore.php";
@@ -294,7 +263,8 @@
               piede: piede,
               biografia: document.getElementById("bio").value,
               max_serie: maxserietext,
-              current_serie: currentserietext
+              current_serie: currentserietext,
+              ruoli: ruoli
             });
             xhr.open("POST", url, true);
             xhr.onreadystatechange = function () {
@@ -315,7 +285,8 @@
               nome_residenza: document.getElementById("city").value+", "+document.getElementById("street").value,
               latitudine: latitudine,
               longitudine: longitudine,
-              current_serie: currentserietext
+              current_serie: currentserietext,
+              ruoli: ruoli
             });
             xhr.open("POST", url, true);
             xhr.onreadystatechange = function () {
@@ -325,7 +296,7 @@
             }
             xhr.send(params);
           }
-          inviaRuoli();
+          alert("fatto");
         }
         function controllo(){
             if(document.getElementById("footballer").checked){
