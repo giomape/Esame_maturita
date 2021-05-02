@@ -21,142 +21,35 @@
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
-    <style>
-      html, body {
-      display: flex;
-      justify-content: center;
-      height: 100%;
-      }
-      body, div, h1, form, input, p, h3 { 
-      padding: 0;
-      margin: 0;
-      outline: none;
-      font-family: Roboto, Arial, sans-serif;
-      font-size: 16px;
-      color: #666;
-      }
-      h1 {
-      padding: 10px 0;
-      font-size: 32px;
-      font-weight: 300;
-      text-align: center;
-      }
-      p {
-      font-size: 12px;
-      }
-      hr {
-      color: #a9a9a9;
-      opacity: 0.3;
-      }
-      .main-block {
-      max-width: 500px; 
-      min-height: 460px; 
-      padding: 10px 0;
-      margin: auto;
-      border-radius: 5px; 
-      border: solid 1px #ccc;
-      box-shadow: 1px 2px 5px rgba(0,0,0,.31); 
-      background: #ebebeb; 
-      }
-      form {
-      margin: 0 30px;
-      }
-      .account-type, .foot-type .role-type .bio-type .history-type{
-      margin: 15px 0;
-      }
-      input[type=radio] {
-      display: none;
-      }
-      label#icon {
-      margin: 0;
-      border-radius: 5px 0 0 5px;
-      }
-      label.radio {
-      position: relative;
-      display: inline-block;
-      padding-top: 4px;
-      margin-right: 20px;
-      text-indent: 30px;
-      overflow: visible;
-      cursor: pointer;
-      }
-      label.radio:before {
-      content: "";
-      position: absolute;
-      top: 2px;
-      left: 0;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: #1c87c9;
-      }
-      label.radio:after {
-      content: "";
-      position: absolute;
-      width: 9px;
-      height: 4px;
-      top: 8px;
-      left: 4px;
-      border: 3px solid #fff;
-      border-top: none;
-      border-right: none;
-      transform: rotate(-45deg);
-      opacity: 0;
-      }
-      input[type=radio]:checked + label:after {
-      opacity: 1;
-      }
-      input[type=text], input[type=password], textarea, input[type=date] {
-      width: calc(100% - 57px);
-      height: 36px;
-      margin: 13px 0 0 -5px;
-      padding-left: 10px; 
-      border-radius: 0 5px 5px 0;
-      border: solid 1px #cbc9c9; 
-      box-shadow: 1px 2px 5px rgba(0,0,0,.09); 
-      background: #fff; 
-      }
-      input[type=password] {
-      margin-bottom: 15px;
-      }
-      #icon {
-      display: inline-block;
-      padding: 9.3px 15px;
-      box-shadow: 1px 2px 5px rgba(0,0,0,.09); 
-      background: #1c87c9;
-      color: #fff;
-      text-align: center;
-      }
-      .btn-block {
-      margin-top: 10px;
-      text-align: center;
-      }
-      input[type=button] {
-      width: 100%;
-      padding: 10px 0;
-      margin: 10px auto;
-      border-radius: 5px; 
-      border: none;
-      background: #1c87c9; 
-      font-size: 14px;
-      font-weight: 600;
-      color: #fff;
-      }
-      input[type=button]:hover {
-      background: #26a9e0;
-      }
-      select {
-      height: 36px;
-      border-radius: 0 5px 5px 0;
-      border: solid 1px #cbc9c9; 
-      box-shadow: 1px 2px 5px rgba(0,0,0,.09); 
-      background: #fff; 
-      }
-    </style>
+    <link href="stile.css" rel="stylesheet">
 
     <script>
         var messi=[];
         const regolaPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+        var usercorrect;
+
+        function checkUsername(){
+          var xhr = new XMLHttpRequest();
+          var url="check_username.php";
+          url+="?username="+document.getElementById("username").value;
+          xhr.open("GET", url, true);
+          xhr.onreadystatechange = function () {
+            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+              let res=JSON.parse(xhr.responseText);
+              if(res=="correct"){
+                document.getElementById("username").style.color="green";
+                document.getElementById("usererrato").style.display="none";
+                usercorrect=true;
+              }
+              else if(res=="wrong"){
+                document.getElementById("username").style.color="red";
+                document.getElementById("usererrato").style.display="inline-block";
+                usercorrect=false;
+              }
+            }
+          }
+          xhr.send();
+        }
 
         function clearOption(Select_toclear) {
           var o = Select_toclear.options.length - 1;
@@ -210,6 +103,11 @@
             else if(document.getElementById("res").innerText=="")
               conta=true;
           }
+          if(usercorrect==false){
+            document.getElementById("usererrato").style.display="inline-block";
+            document.getElementById("username").focus();
+            return;
+          }
           if(conta==false)
             almenounRuolo();
           if(conta==true){
@@ -243,60 +141,64 @@
           }
         }
 
+        var vai=false;
         function inserisciDati(){
           confermaPass();
-          ottieniDatiCorretti();
-          prendiRuoli();
-          if(document.getElementById("footballer").checked){
-            var xhr = new XMLHttpRequest();
-            var url="registrazione_calciatore.php";
-            const params=JSON.stringify({
-              nome: document.getElementById("name").value,
-              cognome: document.getElementById("surname").value,
-              data_nascita: document.getElementById("data").value,
-              email: document.getElementById("email").value, 
-              username: document.getElementById("username").value,
-              password: document.getElementById("password").value,
-              nome_residenza: document.getElementById("city").value+", "+document.getElementById("street").value,
-              latitudine: latitudine,
-              longitudine: longitudine,
-              piede: piede,
-              biografia: document.getElementById("bio").value,
-              max_serie: maxserietext,
-              current_serie: currentserietext,
-              ruoli: ruoli
-            });
-            xhr.open("POST", url, true);
-            xhr.onreadystatechange = function () {
-              if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-
+          if(vai==false)
+            ottieniDatiCorretti();
+          if(vai==false)
+            prendiRuoli();
+          if(vai==false){
+            if(document.getElementById("footballer").checked){
+              var xhr = new XMLHttpRequest();
+              var url="registrazione_calciatore.php";
+              const params=JSON.stringify({
+                nome: document.getElementById("name").value,
+                cognome: document.getElementById("surname").value,
+                data_nascita: document.getElementById("data").value,
+                email: document.getElementById("email").value, 
+                username: document.getElementById("username").value,
+                password: document.getElementById("password").value,
+                nome_residenza: document.getElementById("city").value+", "+document.getElementById("street").value,
+                latitudine: latitudine,
+                longitudine: longitudine,
+                piede: piede,
+                biografia: document.getElementById("bio").value,
+                max_serie: maxserietext,
+                current_serie: currentserietext,
+                ruoli: ruoli
+              });
+              xhr.open("POST", url, true);
+              xhr.onreadystatechange = function () {
+                if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                  window.location.href="verifica_email.html";
+                }
               }
+              xhr.send(params);
             }
-            xhr.send(params);
-          }
-          else{
-            var xhr = new XMLHttpRequest();
-            var url="registrazione_societa.php";
-            const params=JSON.stringify({
-              nome: document.getElementById("names").value,
-              email: document.getElementById("email").value, 
-              username: document.getElementById("username").value,
-              password: document.getElementById("password").value,
-              nome_residenza: document.getElementById("city").value+", "+document.getElementById("street").value,
-              latitudine: latitudine,
-              longitudine: longitudine,
-              current_serie: currentserietext,
-              ruoli: ruoli
-            });
-            xhr.open("POST", url, true);
-            xhr.onreadystatechange = function () {
-              if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-
+            else{
+              var xhr = new XMLHttpRequest();
+              var url="registrazione_societa.php";
+              const params=JSON.stringify({
+                nome: document.getElementById("names").value,
+                email: document.getElementById("email").value, 
+                username: document.getElementById("username").value,
+                password: document.getElementById("password").value,
+                nome_residenza: document.getElementById("city").value+", "+document.getElementById("street").value,
+                latitudine: latitudine,
+                longitudine: longitudine,
+                current_serie: currentserietext,
+                ruoli: ruoli
+              });
+              xhr.open("POST", url, true);
+              xhr.onreadystatechange = function () {
+                if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                  window.location.href="verifica_email.html";
+                }
               }
+              xhr.send(params);
             }
-            xhr.send(params);
           }
-          alert("fatto");
         }
         function controllo(){
             if(document.getElementById("footballer").checked){
@@ -490,6 +392,7 @@
             document.getElementById("password2").value="";
             document.getElementById("perrata").style.display="inline-block";
             document.getElementById("psbagliata").style.display="none";
+            vai=true;
             return;
           }
           else if(!document.getElementById("password").value.match(regolaPassword)) {
@@ -499,6 +402,7 @@
             document.getElementById("password2").value="";
             document.getElementById("psbagliata").style.display="inline-block";
             document.getElementById("perrata").style.display="none";
+            vai=true;
             return;
           } 
           else {
@@ -537,7 +441,8 @@
           <label id="icon" for="email"><i class="fas fa-envelope"></i></label>
           <input type="text" name="email" id="email" placeholder="Email" required/>
           <label id="icon" for="username"><i class="fas fa-user"></i></label>
-          <input type="text" name="username" id="username" placeholder="Username" required/>
+          <input type="text" name="username" id="username" placeholder="Username" onchange="checkUsername()" required/>
+          <p id="usererrato" style="color: red; display: none;">Username non disponibile, selezionarne un altro</p><br>
           <label id="icon" for="password"><i class="fas fa-unlock-alt"></i></label>
           <input type="password" name="password" id="password" placeholder="Password" required/>
           <label id="icon" for="password2"><i class="fas fa-unlock-alt"></i></label>

@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 $data=json_decode(file_get_contents('php://input'),1);
 
 $nome=$data["nome"];
@@ -17,6 +17,10 @@ $biografia=$data["biografia"];
 $max_serie=$data["max_serie"];
 $current_serie=$data["current_serie"];
 $ruoli=$data["ruoli"];
+
+$_SESSION["username"]=$username;
+$_SESSION["password"]=$password;
+$_SESSION["email"]=$email;
 
 try {
 	  $hostname = "localhost";
