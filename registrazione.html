@@ -26,6 +26,7 @@
     <script>
         var messi=[];
         const regolaPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+        const regolaEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
         var usercorrect;
 
         function checkUsername(){
@@ -105,6 +106,8 @@
             document.getElementById("username").focus();
             return;
           }
+          if(conta==false)
+            controlloMail();
           if(conta==false)
             almenounRuolo();
           if(conta==true){
@@ -381,6 +384,19 @@
             }
           }
         }
+        function controlloMail(){
+          if(!document.getElementById("email").value.match(regolaEmail)) {
+            document.getElementById("email").focus();
+            document.getElementById("email").value="";
+            document.getElementById("mailerrata").style.display="inline-block";
+            document.getElementById("perrata").style.display="none";
+            document.getElementById("psbagliata").style.display="none";
+            vai=true;
+            return;
+          } 
+          else {
+          }
+        }
         function confermaPass(){
           if(document.getElementById("password").value!==document.getElementById("password2").value){
             document.getElementById("password").focus();
@@ -389,6 +405,7 @@
             document.getElementById("password2").value="";
             document.getElementById("perrata").style.display="inline-block";
             document.getElementById("psbagliata").style.display="none";
+            document.getElementById("mailerrata").style.display="none";
             vai=true;
             return;
           }
@@ -399,6 +416,7 @@
             document.getElementById("password2").value="";
             document.getElementById("psbagliata").style.display="inline-block";
             document.getElementById("perrata").style.display="none";
+            document.getElementById("mailerrata").style.display="none";
             vai=true;
             return;
           } 
@@ -442,6 +460,7 @@
           </div>
           <label id="icon" for="email"><i class="fas fa-envelope"></i></label>
           <input type="text" name="email" id="email" placeholder="Email" required/>
+          <p id="mailerrata" style="color: red; display: none;">L'email inserita non è valida</p><br>
           <label id="icon" for="username"><i class="fas fa-user"></i></label>
           <input type="text" name="username" id="username" placeholder="Username" onchange="checkUsername()" required/>
           <p id="usererrato" style="color: red; display: none;">Username non disponibile, selezionarne un altro</p><br>
