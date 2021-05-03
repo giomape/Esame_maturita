@@ -1,4 +1,5 @@
 <?php
+header("Content-type: application/json; charset: UTF-8");
 try{
     $hostname = "localhost";
     $dbname = "progetto";
@@ -52,11 +53,11 @@ while ($data = $stmt->fetch(PDO::FETCH_ASSOC)){
 }
 
 if($i==0){
-    echo json_encode("correct");
+    http_response_code(200);
 }
 else{
-    echo json_encode("wrong");
+    http_response_code(409);
 }
-http_response_code(200);
-header("Content-type: application/json; charset: UTF-8");
+
+
 ?>

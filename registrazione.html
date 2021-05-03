@@ -35,17 +35,14 @@
           xhr.open("GET", url, true);
           xhr.onreadystatechange = function () {
             if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-              let res=JSON.parse(xhr.responseText);
-              if(res=="correct"){
                 document.getElementById("username").style.color="green";
                 document.getElementById("usererrato").style.display="none";
                 usercorrect=true;
               }
-              else if(res=="wrong"){
-                document.getElementById("username").style.color="red";
-                document.getElementById("usererrato").style.display="inline-block";
-                usercorrect=false;
-              }
+            else if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 409) {
+              document.getElementById("username").style.color="red";
+              document.getElementById("usererrato").style.display="inline-block";
+              usercorrect=false;
             }
           }
           xhr.send();
@@ -422,6 +419,11 @@
             <label for="footballer" class="radio">Calciatore</label>
             <input type="radio" value="society" id="society" name="account" onchange="controllo()"/>
             <label for="society" class="radio">Società</label>
+          </div>
+          <hr>
+          <div style="text-align: center;">
+            <span style="text-align: center; font-size:15px">Hai già un account? </span>
+            <a href="login.html">Accedi</a>
           </div>
           <hr>
           <h3 style="text-align: center;">Informazioni</h3><br>
