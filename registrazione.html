@@ -98,7 +98,7 @@
               conta=true;
             else if(document.getElementById("street").value=="")
               conta=true;
-            else if(document.getElementById("res").innerText=="")
+            else if(document.getElementById("res").innerText=="" || document.getElementById("res").style.display=="none")
               conta=true;
           }
           if(usercorrect==false){
@@ -193,7 +193,7 @@
               xhr.open("POST", url, true);
               xhr.onreadystatechange = function () {
                 if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                  window.location.href="verifica_email.html";
+                  //window.location.href="verifica_email.html";
                 }
               }
               xhr.send(params);
@@ -391,7 +391,7 @@
             document.getElementById("mailerrata").style.display="inline-block";
             document.getElementById("perrata").style.display="none";
             document.getElementById("psbagliata").style.display="none";
-            vai=true;
+            conta=true;
             return;
           } 
           else {

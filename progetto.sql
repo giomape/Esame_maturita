@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 03, 2021 alle 16:21
--- Versione del server: 10.1.37-MariaDB
--- Versione PHP: 7.3.0
+-- Creato il: Mag 02, 2021 alle 13:45
+-- Versione del server: 10.4.18-MariaDB
+-- Versione PHP: 8.0.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -46,14 +45,6 @@ CREATE TABLE `calciatori` (
   `current_serie` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dump dei dati per la tabella `calciatori`
---
-
-INSERT INTO `calciatori` (`id_calciatore`, `nome`, `cognome`, `data_nascita`, `email`, `verificato`, `username`, `password`, `nome_residenza`, `latitudine`, `longitudine`, `piede`, `biografia`, `max_serie`, `current_serie`) VALUES
-(1, 'Giovanni', 'Mapelli', '2002-03-16', 'ciao@gmail.com', 0, 'gio_mape', '$2y$10$/LW8Qrg8zleIerfGeVJixe2ubqwRtDZ/LMQN4d6pPFnmG4HSFb73W', 'bergamo, longuelo', '45.696595', '9.632866', 'sinistro', 'Ciao ', 'Serie C', 'Serie D'),
-(2, 'Marco', 'Piccioli', '2002-11-19', 'm.calabrone@gmail.com', 0, 'gio_marco', '$2y$10$ANZ2Kb7G6nFeGZgJLDIHEeIUx8aSIXTtWEfgZVneHmfBVxH3Qu9S6', 'stezzano, donatori di sangue', '45.653548', '9.658163', 'destro', 'impetuoso nei duelli 1v1 in fase difensiva, vince tutti duelli aerei e nei tackle mamma mia', 'Terza categoria', 'Terza categoria');
-
 -- --------------------------------------------------------
 
 --
@@ -64,17 +55,6 @@ CREATE TABLE `calciatori_ruoli` (
   `id_calciatore` int(11) NOT NULL,
   `id_ruolo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dump dei dati per la tabella `calciatori_ruoli`
---
-
-INSERT INTO `calciatori_ruoli` (`id_calciatore`, `id_ruolo`) VALUES
-(1, 6),
-(1, 7),
-(1, 8),
-(1, 9),
-(2, 5);
 
 -- --------------------------------------------------------
 
@@ -132,8 +112,7 @@ CREATE TABLE `societa` (
 
 INSERT INTO `societa` (`id_societa`, `nome`, `email`, `verificato`, `username`, `password`, `nome_residenza`, `latitudine`, `longitudine`, `current_serie`) VALUES
 (3, 'gggg', 'ggggg', 0, 'gggggg', '$2y$10$nFTKCuVr9lvA04tj100lPO0udFEt4Ov64NI0T0ES5m7l/1Ox4cfY6', 'telgate, pascoli', '45.628614', '9.845844', 'Eccellenza'),
-(4, 'Prova', 'mapelli.giovanni.studente@itispaleocapa.it', 0, 'trhr', '$2y$10$bk9E8mYDZ63RR/iAUn/mXeYcg4TNiuoOb51jsvRdT4he17p73.k4u', 'telgate, pascoli', '45.628614', '9.845844', 'Serie A'),
-(5, 'bho', 'ciao', 0, 'giova', '$2y$10$teqYqSBgo/PKBrBK5W1ZOuFoaenHqzJhAbByiF5kwI7q.nFyLT26S', 'telgate, pascoli', '45.628614', '9.845844', 'Serie A');
+(4, 'Prova', 'mapelli.giovanni.studente@itispaleocapa.it', 0, 'trhr', '$2y$10$bk9E8mYDZ63RR/iAUn/mXeYcg4TNiuoOb51jsvRdT4he17p73.k4u', 'telgate, pascoli', '45.628614', '9.845844', 'Serie A');
 
 -- --------------------------------------------------------
 
@@ -153,8 +132,7 @@ CREATE TABLE `societa_ruoli` (
 INSERT INTO `societa_ruoli` (`id_societa`, `id_ruolo`) VALUES
 (3, 5),
 (3, 12),
-(4, 1),
-(5, 1);
+(4, 1);
 
 --
 -- Indici per le tabelle scaricate
@@ -200,7 +178,7 @@ ALTER TABLE `societa_ruoli`
 -- AUTO_INCREMENT per la tabella `calciatori`
 --
 ALTER TABLE `calciatori`
-  MODIFY `id_calciatore` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_calciatore` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT per la tabella `ruoli`
@@ -212,7 +190,7 @@ ALTER TABLE `ruoli`
 -- AUTO_INCREMENT per la tabella `societa`
 --
 ALTER TABLE `societa`
-  MODIFY `id_societa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_societa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Limiti per le tabelle scaricate
