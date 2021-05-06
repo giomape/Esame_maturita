@@ -4,7 +4,7 @@ $username=$_GET["username"];
 
 try {
   $hostname = "localhost";
-  $dbname = "progetto";
+  $dbname = "my_giovannimapelli10";
   $user = "root";
   $pass = "";
   $db = new PDO ("mysql:host=$hostname;dbname=$dbname", $user, $pass);
@@ -19,7 +19,7 @@ $sql = "UPDATE calciatori SET verificato=1 WHERE username='$username'; UPDATE so
 try
 { 
 $stmt = $db->prepare($sql);
-$stmt->execute([$nome, $email, $username, $password, $nome_residenza, $latitudine, $longitudine, $current_serie]);
+$stmt->execute();
 }
 catch(PDOException $e)
 {

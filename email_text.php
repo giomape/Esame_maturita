@@ -31,11 +31,9 @@
   <body style="background-color: rgb(77, 177, 77);">
     <div class="main-block">
         <h1>Verifica E-mail</h1>
-        <form name="Verifica">
-          <hr>
-          <h3>Clicca il link per confermare la tua mail</h3><br><br><br><br><br><br><br><br><br>
-          <a href="email_confirmer.php?username="+<?php session_start(); echo $_SESSION["username"]; ?>></a>
-        </form>
+        <hr>
+        <h3>Clicca il link per confermare la tua mail</h3><br><br><br><br><br>
+        <a href='http://giovannimapelli10.altervista.org/progetto/email_confirmer.php?username={{username}}'>Clicca qui per confermare la mail</a>
       </div>    
   </body>
 </html>

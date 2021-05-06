@@ -193,7 +193,7 @@
               xhr.open("POST", url, true);
               xhr.onreadystatechange = function () {
                 if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                  //window.location.href="verifica_email.html";
+                  window.location.href="verifica_email.html";
                 }
               }
               xhr.send(params);
@@ -505,7 +505,7 @@
           <div class="bio-type" style="text-align: center;" id="biodiv">
             <hr>
             <h3 style="text-align: center;">Biografia</h3>
-            <textarea name="bio" id="bio" placeholder="Inserisci una breve biografia" style="resize:none;height: 150px;" required/></textarea>
+            <textarea name="bio" id="bio" placeholder="Inserisci una breve biografia" style="resize:none;height: 150px;" maxlength="499" required/></textarea>
           </div>
           <div class="hisotry-type" style="text-align: center;" id="hismaxdiv">
             <hr>
