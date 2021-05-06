@@ -1,4 +1,5 @@
 <?php
+require("https.php");
 session_start();
 $data=json_decode(file_get_contents('php://input'),1);
 
@@ -17,9 +18,11 @@ $_SESSION["username"]=$username;
 $_SESSION["password"]=$password;
 $_SESSION["email"]=$email;
 
+echo $_SESSION["username"];
+
 try {
 	  $hostname = "localhost";
-    $dbname = "progetto";
+    $dbname = "my_giovannimapelli10";
     $user = "root";
     $pass = "";
     $db = new PDO ("mysql:host=$hostname;dbname=$dbname", $user, $pass);

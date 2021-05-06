@@ -1,4 +1,5 @@
 <?php
+require("https.php");
 header("Content-type: application/json; charset: UTF-8");
 try{
     $hostname = "localhost";

@@ -18,21 +18,42 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
     -->
    
-    <title>Registrazione</title>
+    <title>Verifica e-mail</title>
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <link href="stile.css" rel="stylesheet">
 
     <script>
+        function sendEmail(){
+          var xhr = new XMLHttpRequest();
+          var url="email_sender.php";
+          xhr.open("GET", url, true);
+          xhr.onreadystatechange = function () {
 
+          }
+          xhr.send();
+        }
+        function controlloverifica(){
+          var xhr = new XMLHttpRequest();
+          var url="controlloverifica.php";
+          xhr.open("GET", url, true);
+          xhr.onreadystatechange = function () {
+
+          }
+          xhr.send();
+        }
     </script>
   </head>
 
-  <body>
+  <body style="background-color: rgb(77, 177, 77);" onload="sendEmail()">
+    <div class="main-block">
         <h1>Verifica E-mail</h1>
-        <hr>
-        <h3>Clicca il link per confermare la tua mail</h3>
-        <a href='https://giovannimapelli10.altervista.org/progetto/email_confirmer.php?username={{username}}'>https://giovannimapelli10.altervista.org/progetto/email_confirmer.php?username={{username}}</a><br><br><br><br><br><br>
+        <form name="Verifica">
+          <hr>
+          <h3>E' stata mandata un e-mail di verifica all'indirizzo inserito precedentemente, confermare la propria e-mail prima di continuare</h3><br><br><br><br><br><br><br><br><br>
+          <input type="button" value="Fatto" onclick="controlloverifica()">
+        </form>
+      </div>    
   </body>
 </html>

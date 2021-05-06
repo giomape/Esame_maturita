@@ -1,5 +1,5 @@
 <?php
-
+require("https.php");
 $username=$_GET["username"];
 
 try {
