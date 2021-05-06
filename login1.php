@@ -7,6 +7,9 @@ $data=json_decode(file_get_contents('php://input'),1);
 $username=$data["username"];
 $inpass=$data["password"];
 
+$_SESSION["username"]=$username;
+$_SESSION["password"]=$password;
+
 try{
     $hostname = "localhost";
     $dbname = "my_giovannimapelli10";

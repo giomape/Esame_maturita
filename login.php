@@ -53,7 +53,7 @@
             xhr.open("POST", url, true);
             xhr.onreadystatechange = function () {
               if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                  alert("giusto");
+                  window.location.href="verifica_email.php";
                 }
               else if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 401) {
                 document.getElementById("required").style.display="none";

@@ -39,14 +39,19 @@
           var url="controlloverifica.php";
           xhr.open("GET", url, true);
           xhr.onreadystatechange = function () {
-
+            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+              alert("email verificata");
+            }
+            else if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 401) {
+              return;
+            }
           }
           xhr.send();
         }
     </script>
   </head>
 
-  <body style="background-color: rgb(77, 177, 77);" onload="sendEmail()">
+  <body style="background-color: rgb(77, 177, 77);" onload="sendEmail(); controlloverifica()">
     <div class="main-block">
         <h1>Verifica E-mail</h1>
         <form name="Verifica">
