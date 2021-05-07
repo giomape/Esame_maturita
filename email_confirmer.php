@@ -26,5 +26,8 @@ catch(PDOException $e)
 echo $e;
 }
 
+http_response_code(200);
+header('Location: email_verificata.php');
+
 
 ?>

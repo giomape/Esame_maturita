@@ -18,21 +18,28 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
     -->
    
-    <title>Registrazione</title>
+    <title>E-mail verificata</title>
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <link href="stile.css" rel="stylesheet">
 
-    <script>
-
-    </script>
   </head>
 
-  <body>
-        <h1>Verifica E-mail</h1>
-        <hr>
-        <h3>Clicca il link per confermare la tua mail</h3>
-        <a href='https://giovannimapelli10.altervista.org/progetto/email_confirmer.php?username={{username}}'>https://giovannimapelli10.altervista.org/progetto/email_confirmer.php?username={{username}}</a><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+  <script>
+    function gotologin(){
+      window.location.href="login.php";
+    }
+  </script>
+
+  <body style="background-color: rgb(77, 177, 77);">
+    <div class="main-block">
+        <h1>E-mail verificata</h1>
+        <form name="Verifica">
+          <hr>
+          <h3>Grazie per aver verificato la mail</h3><br><br><br><br><br><br><br><br><br><br><br><br>
+          <input type="button" value="Vai al Login" onclick="gotologin()">
+        </form>
+      </div>    
   </body>
 </html>

@@ -33,8 +33,6 @@ while ($data = $stmt->fetch(PDO::FETCH_ASSOC)){
     if($data["numero"]==1){
         $conta=true;
     }
-    echo $data["numero"];
-    echo var_dump($conta);
 }
 
 if($conta==true){

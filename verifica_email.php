@@ -43,6 +43,7 @@
               alert("email verificata");
             }
             else if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 401) {
+              sendEmail();
               return;
             }
           }
@@ -51,7 +52,7 @@
     </script>
   </head>
 
-  <body style="background-color: rgb(77, 177, 77);" onload="sendEmail(); controlloverifica()">
+  <body style="background-color: rgb(77, 177, 77);" onload="controlloverifica()">
     <div class="main-block">
         <h1>Verifica E-mail</h1>
         <form name="Verifica">
