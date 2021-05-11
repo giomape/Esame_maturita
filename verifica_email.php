@@ -40,7 +40,7 @@
           xhr.open("GET", url, true);
           xhr.onreadystatechange = function () {
             if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-              alert("email verificata");
+              window.location.href="index.php";
             }
             else if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 401) {
               sendEmail();
