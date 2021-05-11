@@ -245,7 +245,7 @@ Notification
 <i class="fas fa-angle-down"></i>
 </div>
 <div class="user-account-settingss" id="users">
-<h3 class="tc">Logout</h3>
+<h3 class="tc"><a href="logout.php">Logout</a></h3>
 </div>
 </div>
 </div>
