@@ -44,6 +44,8 @@
             }
             else if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 401) {
               sendEmail();
+              document.getElementById("caricamento").style.display="none";
+              document.getElementById("main").style.display="inline-block";
               return;
             }
           }
@@ -52,14 +54,17 @@
     </script>
   </head>
 
-  <body style="background-color: rgb(77, 177, 77);" onload="controlloverifica()">
-    <div class="main-block">
-        <h1>Verifica E-mail</h1>
-        <form name="Verifica">
-          <hr>
-          <h3>E' stata mandata un e-mail di verifica all'indirizzo inserito precedentemente, confermare la propria e-mail prima di continuare</h3><br><br><br><br><br><br><br><br><br>
-          <input type="button" value="Fatto" onclick="controlloverifica()">
-        </form>
-      </div>    
+  <body style="background-color: #ffffff;" onload="controlloverifica()">
+    <div id="caricamento">
+      <img src="https://www.drogbaster.it/loading/loading40.gif" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+    </div>
+    <div class="main-block" id="main" style="display:none">
+      <h1>Verifica E-mail</h1>
+      <form name="Verifica">
+        <hr>
+        <h3>E' stata mandata un e-mail di verifica all'indirizzo inserito precedentemente, confermare la propria e-mail prima di continuare</h3><br><br><br><br><br><br><br><br><br>
+        <input type="button" value="Fatto" onclick="controlloverifica()">
+      </form>
+    </div>    
   </body>
 </html>

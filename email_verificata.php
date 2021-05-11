@@ -32,7 +32,7 @@
     }
   </script>
 
-  <body style="background-color: rgb(77, 177, 77);">
+  <body style="background-color: #f2f2f2;">
     <div class="main-block">
         <h1>E-mail verificata</h1>
         <form name="Verifica">
