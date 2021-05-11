@@ -13,13 +13,13 @@ try {
 }
 
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-$sql = "UPDATE calciatori SET verificato=1 WHERE username='$username'; UPDATE societa SET verificato=1 WHERE username='$username';";
+$sql = "UPDATE calciatori SET verificato=1 WHERE username=?; UPDATE societa SET verificato=1 WHERE username=?;";
 
 
 try
 { 
 $stmt = $db->prepare($sql);
-$stmt->execute();
+$stmt->execute([$username, $username]);
 }
 catch(PDOException $e)
 {

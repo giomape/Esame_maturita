@@ -36,12 +36,12 @@ while ($data = $stmt->fetch(PDO::FETCH_ASSOC)){
 
 
 
-$sql = "SELECT COUNT(username) AS Numero FROM societa WHERE username='$username'";
+$sql = "SELECT COUNT(username) AS Numero FROM societa WHERE username=?";
 
 try
 { 
 $stmt = $db->prepare($sql);
-$stmt->execute();
+$stmt->execute([$username]);
 }
 catch(PDOException $e)
 {

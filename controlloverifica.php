@@ -17,12 +17,12 @@ $conta=false;
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
-$sql = "SELECT COUNT(id_calciatore) AS numero FROM calciatori WHERE verificato=1 AND username='$username' union SELECT COUNT(id_societa) AS numero FROM societa WHERE verificato=1 AND username='$username'";
+$sql = "SELECT COUNT(id_calciatore) AS numero FROM calciatori WHERE verificato=1 AND username=? union SELECT COUNT(id_societa) AS numero FROM societa WHERE verificato=1 AND username=?";
 
 try
 { 
 $stmt = $db->prepare($sql);
-$stmt->execute();
+$stmt->execute([$username, $username]);
 }
 catch(PDOException $e)
 {
