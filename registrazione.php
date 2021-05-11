@@ -430,7 +430,7 @@
     </script>
   </head>
 
-  <body style="background-color: rgb(77, 177, 77);" onload="controllo();getRuoli()">
+  <body style="background-color: #f2f2f2;" onload="controllo();getRuoli()">
     <div class="main-block">
         <h1>Registrazione</h1>
         <form name="registrazione">

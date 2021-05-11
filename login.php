@@ -69,7 +69,7 @@
     </script>
   </head>
 
-  <body style="background-color: rgb(77, 177, 77);" onload="">
+  <body style="background-color: #f2f2f2;" onload="">
     <div class="main-block">
         <h1>Login</h1>
         <form name="login">
