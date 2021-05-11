@@ -27,8 +27,30 @@
 <link rel="stylesheet" type="text/css" href="css/slick-theme.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <link rel="stylesheet" type="text/css" href="css/responsive.css">
+
+<script>
+    function prendiDati(){
+        var xhr = new XMLHttpRequest();
+          var url="prendiDati.php";
+          xhr.open("GET", url, true);
+          xhr.onreadystatechange = function () {
+            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                info=JSON.parse(xhr.responseText);
+                document.getElementById("nomeprofilo").innerHTML=info.nome;
+                if(info.tipo=="calciatore"){
+                    document.getElementById("biografia").innerHTML=info.biografia;
+                }
+                else{
+                    document.getElementById("biografia").innerHTML=info.current_serie;
+                }
+              }
+          }
+          xhr.send();
+    }
+</script>
+
 </head>
-<body>
+<body onload="prendiDati()">
 <div class="wrapper">
 <header>
 <div class="container">
@@ -250,21 +272,18 @@ Notification
 </div>
 </div>
 <div class="user-specs">
-<h3>Profilo utente</h3>
-<span>Biografia dell'utente</span>
+<h3 id="nomeprofilo"></h3>
+<span id="biografia"></span>
 </div>
 </div>
 <ul class="user-fw-status">
 <li>
 <h4>Following</h4>
-<span>45</span>
+<span id="seguiti">45</span>
 </li>
 <li>
 <h4>Followers</h4>
-<span>45.3M</span>
-</li>
-<li>
-<a href="my-profile.html" title="">View Profile</a>
+<span id="seguaci">45.3M</span>
 </li>
 </ul>
 </div>
@@ -416,80 +435,7 @@ Notification
 <a href="#"><i class="fas fa-eye"></i>Views 50</a>
 </div>
 </div>
-<div class="top-profiles">
-<div class="pf-hd">
-<h3>Top Profiles</h3>
-<i class="la la-ellipsis-v"></i>
-</div>
-<div class="profiles-slider">
-<div class="user-profy">
-<img src="" alt="">
-<h3>John Doe</h3>
-<span>Graphic Designer</span>
-<ul>
-<li><a href="#" title="" class="followw">Follow</a></li>
-<li><a href="#" title="" class="envlp"><img src="" alt=""></a></li>
-<li><a href="#" title="" class="hire">hire</a></li>
-</ul>
-<a href="#" title="">View Profile</a>
-</div>
-<div class="user-profy">
-<img src="" alt="">
-<h3>John Doe</h3>
-<span>Graphic Designer</span>
-<ul>
-<li><a href="#" title="" class="followw">Follow</a></li>
-<li><a href="#" title="" class="envlp"><img src="" alt=""></a></li>
-<li><a href="#" title="" class="hire">hire</a></li>
-</ul>
-<a href="#" title="">View Profile</a>
-</div>
-<div class="user-profy">
-<img src="" alt="">
-<h3>John Doe</h3>
-<span>Graphic Designer</span>
-<ul>
-<li><a href="#" title="" class="followw">Follow</a></li>
-<li><a href="#" title="" class="envlp"><img src="" alt=""></a></li>
-<li><a href="#" title="" class="hire">hire</a></li>
-</ul>
-<a href="#" title="">View Profile</a>
-</div>
-<div class="user-profy">
-<img src="" alt="">
-<h3>John Doe</h3>
-<span>Graphic Designer</span>
-<ul>
-<li><a href="#" title="" class="followw">Follow</a></li>
-<li><a href="#" title="" class="envlp"><img src="" alt=""></a></li>
-<li><a href="#" title="" class="hire">hire</a></li>
-</ul>
-<a href="#" title="">View Profile</a>
-</div>
-<div class="user-profy">
-<img src="" alt="">
-<h3>John Doe</h3>
-<span>Graphic Designer</span>
-<ul>
-<li><a href="#" title="" class="followw">Follow</a></li>
-<li><a href="#" title="" class="envlp"><img src="" alt=""></a></li>
-<li><a href="#" title="" class="hire">hire</a></li>
-</ul>
-<a href="#" title="">View Profile</a>
-</div>
-<div class="user-profy">
-<img src="" alt="">
-<h3>John Doe</h3>
-<span>Graphic Designer</span>
-<ul>
-<li><a href="#" title="" class="followw">Follow</a></li>
-<li><a href="#" title="" class="envlp"><img src="" alt=""></a></li>
-<li><a href="#" title="" class="hire">hire</a></li>
-</ul>
-<a href="#" title="">View Profile</a>
-</div>
-</div>
-</div>
+
 <div class="post-bar">
 <div class="post_topbar">
 <div class="usy-dt">
@@ -673,15 +619,6 @@ Notification
 </div>
 <div class="col-lg-3 pd-right-none no-pd">
 <div class="right-sidebar">
-<div class="widget widget-about">
-<img src="" alt="">
-<h3>Track Time on Workwise</h3>
-<span>Pay only for the Hours worked</span>
-<div class="sign_link">
-<h3><a href="sign-in.html" title="">Sign up</a></h3>
-<a href="#" title="">Learn More</a>
-</div>
-</div>
 <div class="widget widget-jobs">
 <div class="sd-title">
 <h3>Top Jobs</h3>
