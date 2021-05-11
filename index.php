@@ -39,9 +39,11 @@
                 document.getElementById("nomeprofilo").innerHTML=info.nome;
                 if(info.tipo=="calciatore"){
                     document.getElementById("biografia").innerHTML=info.biografia;
+                    document.getElementById("profilivicini").innerHTML="Società nelle vicinanze";
                 }
                 else{
                     document.getElementById("biografia").innerHTML=info.current_serie;
+                    document.getElementById("profilivicini").innerHTML="Calciatori nelle vicinanze";
                 }
               }
           }
@@ -621,7 +623,7 @@ Notification
 <div class="right-sidebar">
 <div class="widget widget-jobs">
 <div class="sd-title">
-<h3>Top Jobs</h3>
+<h3 id="profilivicini"></h3>
 <i class="la la-ellipsis-v"></i>
 </div>
 <div class="jobs-list">
