@@ -20,6 +20,7 @@
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/line-awesome.css">
 <link rel="stylesheet" type="text/css" href="css/line-awesome-font-awesome.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 <link href="css/all.min.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="css/jquery.mCustomScrollbar.min.css">
@@ -29,6 +30,8 @@
 <link rel="stylesheet" type="text/css" href="css/responsive.css">
 
 <script>
+var info;
+
     function prendiDati(){
         var xhr = new XMLHttpRequest();
           var url="prendiDati.php";
@@ -36,19 +39,43 @@
           xhr.onreadystatechange = function () {
             if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                 info=JSON.parse(xhr.responseText);
-                document.getElementById("nomeprofilo").innerHTML=info.nome;
+                document.getElementById("username").innerHTML=info.username;
+                document.getElementById("nomeinalto").innerHTML=info.username;
+                let residenza=info.nome_residenza.split(",");
+                let citta=residenza[0];
+                let via=residenza[1];
                 if(info.tipo=="calciatore"){
-                    document.getElementById("biografia").innerHTML=info.biografia;
+                    document.getElementById("biografia").style.display="block";
+                    document.getElementById("nome").style.display="block";
+                    document.getElementById("data_nascita").style.display="block";
+                    document.getElementById("currentserie").style.display="block";
+                    document.getElementById("maxserie").style.display="block";
+                    document.getElementById("residenza").style.display="block";
+                    document.getElementById("piede").style.display="block";
+
+                    document.getElementById("biografia").innerHTML="<span style='font-weight: bold;'>Biografia</span>: "+info.biografia;
+                    document.getElementById("nome").innerHTML="<span style='font-weight: bold;'>Nome</span>: "+info.nome+" "+info.cognome;
+                    document.getElementById("data_nascita").innerHTML="<span style='font-weight: bold;'>Data di nascita</span>: "+info.data_nascita;
+                    document.getElementById("currentserie").innerHTML="<span style='font-weight: bold;'>Serie corrente</span>: "+info.current_serie;
+                    document.getElementById("maxserie").innerHTML="<span style='font-weight: bold;'>Massima serie raggiunta</span>: "+info.max_serie;
+                    document.getElementById("piede").innerHTML="<span style='font-weight: bold;'>Piede</span>: "+info.piede;
+                    document.getElementById("residenza").innerHTML="<span style='font-weight: bold;'>Città</span>: "+citta+"<span style='font-weight: bold;'> Via</span>: "+via;
                     document.getElementById("profilivicini").innerHTML="Società nelle vicinanze";
                 }
                 else{
-                    document.getElementById("biografia").innerHTML=info.current_serie;
+                    document.getElementById("nome").style.display="block";
+                    document.getElementById("currentserie").style.display="block";
+                    document.getElementById("residenza").style.display="block";
                     document.getElementById("profilivicini").innerHTML="Calciatori nelle vicinanze";
+                    document.getElementById("nome").innerHTML="<span style='font-weight: bold;'>Nome società</span>: "+info.nome;
+                    document.getElementById("currentserie").innerHTML="<span style='font-weight: bold;'>Serie corrente</span>: "+info.current_serie;
+                    document.getElementById("residenza").innerHTML="<span style='font-weight: bold;'>Città</span>: "+citta+"<span style='font-weight: bold;'> Via</span>: "+via;
                 }
               }
           }
           xhr.send();
     }
+    
 </script>
 
 </head>
@@ -63,7 +90,7 @@
 <div class="search-bar">
 <form>
 <input type="text" name="search" placeholder="Search...">
-<button type="submit"><i class="la la-search"></i></button>
+<button type="submit"><i class="fas fa-search"></i></button>
 </form>
 </div>
 <nav>
@@ -209,51 +236,16 @@ Notification
 </ul>
 </nav>
 <div class="menu-btn">
-<a href="#" title=""><i class="fa fa-bars"></i></a>
+<a href="#" title=""><i class="fas fa-bars"></i></a>
 </div>
 <div class="user-account">
 <div class="user-info">
 <img src="" alt="">
-<a href="#" title="">John</a>
-<i class="la la-sort-down"></i>
+<a href="#" title="" id="nomeinalto"></a>
+<i class="fas fa-angle-down"></i>
 </div>
 <div class="user-account-settingss" id="users">
-<h3>Online Status</h3>
-<ul class="on-off-status">
-<li>
-<div class="fgt-sec">
-<input type="radio" name="cc" id="c5">
-<label for="c5">
-<span></span>
-</label>
-<small>Online</small>
-</div>
-</li>
-<li>
-<div class="fgt-sec">
-<input type="radio" name="cc" id="c6">
-<label for="c6">
-<span></span>
-</label>
-<small>Offline</small>
-</div>
-</li>
-</ul>
-<h3>Custom Status</h3>
-<div class="search_form">
-<form>
-<input type="text" name="search">
-<button type="submit">Ok</button>
-</form>
-</div>
-<h3>Setting</h3>
-<ul class="us-links">
-<li><a href="profile-account-setting.html" title="">Account Setting</a></li>
-<li><a href="#" title="">Privacy</a></li>
-<li><a href="#" title="">Faqs</a></li>
-<li><a href="#" title="">Terms & Conditions</a></li>
-</ul>
-<h3 class="tc"><a href="sign-in.html" title="">Logout</a></h3>
+<h3 class="tc">Logout</h3>
 </div>
 </div>
 </div>
@@ -274,8 +266,14 @@ Notification
 </div>
 </div>
 <div class="user-specs">
-<h3 id="nomeprofilo"></h3>
-<span id="biografia"></span>
+<h3 id="username"></h3>
+<p style="display:none" id="nome"></p>
+<p style="display:none" id="biografia"></p>
+<p style="display:none" id="data_nascita"></p>
+<p style="display:none" id="piede"></p>
+<p style="display:none" id="maxserie"></p>
+<p style="display:none" id="currentserie"></p>
+<p style="display:none" id="residenza"></p>
 </div>
 </div>
 <ul class="user-fw-status">
@@ -624,7 +622,6 @@ Notification
 <div class="widget widget-jobs">
 <div class="sd-title">
 <h3 id="profilivicini"></h3>
-<i class="la la-ellipsis-v"></i>
 </div>
 <div class="jobs-list">
 <div class="job-info">
@@ -673,98 +670,6 @@ Notification
 </div>
 </div>
 </div>
-</div>
-<div class="widget widget-jobs">
-<div class="sd-title">
-<h3>Most Viewed This Week</h3>
-<i class="la la-ellipsis-v"></i>
-</div>
-<div class="jobs-list">
-<div class="job-info">
-<div class="job-details">
-<h3>Senior Product Designer</h3>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
-</div>
-<div class="hr-rate">
-<span>$25/hr</span>
-</div>
-</div>
-<div class="job-info">
-<div class="job-details">
-<h3>Senior UI / UX Designer</h3>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
-</div>
-<div class="hr-rate">
-<span>$25/hr</span>
-</div>
-</div>
-<div class="job-info">
-<div class="job-details">
-<h3>Junior Seo Designer</h3>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
-</div>
-<div class="hr-rate">
-<span>$25/hr</span>
-</div>
-</div>
-</div>
-</div>
-<div class="widget suggestions full-width">
-<div class="sd-title">
-<h3>Most Viewed People</h3>
-<i class="la la-ellipsis-v"></i>
-</div>
-<div class="suggestions-list">
-<div class="suggestion-usd">
-<img src="" alt="">
-<div class="sgt-text">
-<h4>Jessica William</h4>
-<span>Graphic Designer</span>
-</div>
-<span><i class="la la-plus"></i></span>
-</div>
-<div class="suggestion-usd">
-<img src="" alt="">
-<div class="sgt-text">
-<h4>John Doe</h4>
-<span>PHP Developer</span>
-</div>
-<span><i class="la la-plus"></i></span>
-</div>
-<div class="suggestion-usd">
-<img src="" alt="">
-<div class="sgt-text">
-<h4>Poonam</h4>
-<span>Wordpress Developer</span>
-</div>
-<span><i class="la la-plus"></i></span>
-</div>
-<div class="suggestion-usd">
-<img src="" alt="">
-<div class="sgt-text">
-<h4>Bill Gates</h4>
-<span>C &amp; C++ Developer</span>
-</div>
-<span><i class="la la-plus"></i></span>
-</div>
-<div class="suggestion-usd">
-<img src="" alt="">
-<div class="sgt-text">
-<h4>Jessica William</h4>
-<span>Graphic Designer</span>
-</div>
-<span><i class="la la-plus"></i></span>
-</div>
-<div class="suggestion-usd">
-<img src="" alt="">
-<div class="sgt-text">
-<h4>John Doe</h4>
-<span>PHP Developer</span>
-</div>
-<span><i class="la la-plus"></i></span>
-</div>
-<div class="view-more">
-<a href="#" title="">View More</a>
 </div>
 </div>
 </div>
