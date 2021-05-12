@@ -64,7 +64,7 @@ var info;
                     
                 }
                 else{
-                    document.getElementById("immagine").src="player_image.svg";
+                    document.getElementById("immagine").src="team_image.svg";
                     document.getElementById("nome").style.display="block";
                     document.getElementById("currentserie").style.display="block";
                     document.getElementById("residenza").style.display="block";
