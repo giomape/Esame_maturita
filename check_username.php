@@ -17,12 +17,12 @@ $i=0;
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
-$sql = "SELECT COUNT(username) AS Numero FROM calciatori WHERE username='$username'";
+$sql = "SELECT COUNT(username) AS Numero FROM calciatori WHERE username=?";
 
 try
 { 
 $stmt = $db->prepare($sql);
-$stmt->execute();
+$stmt->execute([$username]);
 }
 catch(PDOException $e)
 {
