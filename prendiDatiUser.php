@@ -12,7 +12,7 @@ try{
     echo $e->getMessage();
 }
 
-$username=$_SESSION["username"];
+$username=$_GET["username"];
 
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -34,14 +34,12 @@ $i=0;
 
 while ($data = $stmt->fetch(PDO::FETCH_ASSOC)){
     if($data["id_societa"]!=""){
-        $info=array('nome' => $data["nome"], 'email' => $data["email"], 'username' => $data["username"], 'nome_residenza' => $data["nome_residenza"], 'latitudine' => $data["latitudine"], 'longitudine' => $data["longitudine"], 'current_serie' => $data["current_serie"], 'tipo' => "societa");
+        $info=array('nome' => $data["nome"], 'email' => $data["email"], 'username' => $data["username"], 'nome_residenza' => $data["nome_residenza"], 'latitudine' => $data["latitudine"], 'longitudine' => $data["longitudine"], 'current_serie' => $data["current_serie"], 'tipo' => "societa", 'vecchio'=>$_SESSION["type"]);
         $i++;
     }
 }
-$_SESSION["type"]="societa";
 
 if($i==0){
-    $_SESSION["type"]="calciatore";
     $sql = "SELECT * FROM `calciatori` WHERE username=?";
 
     try
@@ -59,7 +57,7 @@ if($i==0){
 
     while ($data = $stmt->fetch(PDO::FETCH_ASSOC)){
         if($data["id_calciatore"]!=""){
-            $info=array('nome' => $data["nome"], 'email' => $data["email"], 'username' => $data["username"], 'nome_residenza' => $data["nome_residenza"], 'latitudine' => $data["latitudine"], 'longitudine' => $data["longitudine"], 'current_serie' => $data["current_serie"], 'cognome' => $data["cognome"], 'data_nascita' => $data["data_nascita"], 'piede' => $data["piede"], 'biografia' => $data["biografia"], 'max_serie' => $data["max_serie"], 'tipo' => "calciatore");
+            $info=array('nome' => $data["nome"], 'email' => $data["email"], 'username' => $data["username"], 'nome_residenza' => $data["nome_residenza"], 'latitudine' => $data["latitudine"], 'longitudine' => $data["longitudine"], 'current_serie' => $data["current_serie"], 'cognome' => $data["cognome"], 'data_nascita' => $data["data_nascita"], 'piede' => $data["piede"], 'biografia' => $data["biografia"], 'max_serie' => $data["max_serie"], 'tipo' => "calciatore", 'vecchio'=>$_SESSION["type"]);
             $i++;
         }
     }

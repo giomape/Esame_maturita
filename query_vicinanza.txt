@@ -1,1 +1,3 @@
 SELECT username, ( 3959 * acos ( cos ( radians(51.4351301) ) * cos( radians( latitudine ) ) * cos( radians( longitudine ) - radians(-0.42747963810334544) ) + sin ( radians(51.4351301) ) * sin( radians( latitudine ) ) ) ) AS distanza FROM societa HAVING distanza < 30 ORDER BY distanza LIMIT 0 , 20
+
+SELECT username, (6371 * acos (cos ( radians(78.3232) )* cos( radians( lat ) )* cos( radians( lng ) - radians(65.3234) )+ sin ( radians(78.3232) )* sin( radians( lat ) ))) AS distance FROM societa HAVING distance < 30 ORDER BY distance LIMIT 0 , 20;

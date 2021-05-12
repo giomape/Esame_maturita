@@ -24,7 +24,7 @@ try{
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
-$sql = "SELECT password FROM societa WHERE username=? UNION SELECT password FROM calciatori WHERE username=?;";
+$sql = "SELECT password, latitudine, longitudine FROM societa WHERE username=? UNION SELECT password, latitudine, longitudine FROM calciatori WHERE username=?;";
 
 try
 { 
@@ -35,9 +35,16 @@ try
 }
 
 $hash = '';
+$lat = '';
+$long = '';
 while ($data = $stmt->fetch(PDO::FETCH_ASSOC)){
     $hash=$data["password"];
+    $lat=$data["latitudine"];
+    $long=$data["longitudine"];
 }
+$_SESSION["lat"]=$lat;
+$_SESSION["long"]=$long;
+
 
 if (password_verify($inpass, $hash)) {
     http_response_code(200);
