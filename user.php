@@ -34,13 +34,14 @@ var info;
 
     function prendiDati(){
         var xhr = new XMLHttpRequest();
-          var url="prendiDati.php";
+          var url="prendiDatiUser.php";
+          url+="?username="+"<?php echo $_GET["username"]; ?>";
           xhr.open("GET", url, true);
           xhr.onreadystatechange = function () {
             if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                 info=JSON.parse(xhr.responseText);
                 document.getElementById("username").innerHTML=info.username;
-                document.getElementById("nomeinalto").innerHTML=info.username;
+                document.getElementById("nomeinalto").innerHTML="<?php echo $_SESSION["username"]; ?>";
                 let residenza=info.nome_residenza.split(",");
                 let citta=residenza[0];
                 let via=residenza[1];
@@ -53,7 +54,6 @@ var info;
                     document.getElementById("maxserie").style.display="block";
                     document.getElementById("residenza").style.display="block";
                     document.getElementById("piede").style.display="block";
-
                     document.getElementById("biografia").innerHTML="<span style='font-weight: bold;'>Biografia</span>: "+info.biografia;
                     document.getElementById("nome").innerHTML="<span style='font-weight: bold;'>Nome</span>: "+info.nome+" "+info.cognome;
                     document.getElementById("data_nascita").innerHTML="<span style='font-weight: bold;'>Data di nascita</span>: "+info.data_nascita;
@@ -61,17 +61,22 @@ var info;
                     document.getElementById("maxserie").innerHTML="<span style='font-weight: bold;'>Massima serie raggiunta</span>: "+info.max_serie;
                     document.getElementById("piede").innerHTML="<span style='font-weight: bold;'>Piede</span>: "+info.piede;
                     document.getElementById("residenza").innerHTML="<span style='font-weight: bold;'>Città</span>: "+citta+"<span style='font-weight: bold;'> Via</span>: "+via;
-                    document.getElementById("profilivicini").innerHTML="Società nelle vicinanze";
+                    
                 }
                 else{
                     document.getElementById("immagine").src="player_image.svg";
                     document.getElementById("nome").style.display="block";
                     document.getElementById("currentserie").style.display="block";
                     document.getElementById("residenza").style.display="block";
-                    document.getElementById("profilivicini").innerHTML="Calciatori nelle vicinanze";
                     document.getElementById("nome").innerHTML="<span style='font-weight: bold;'>Nome società</span>: "+info.nome;
                     document.getElementById("currentserie").innerHTML="<span style='font-weight: bold;'>Serie corrente</span>: "+info.current_serie;
                     document.getElementById("residenza").innerHTML="<span style='font-weight: bold;'>Città</span>: "+citta+"<span style='font-weight: bold;'> Via</span>: "+via;
+                }
+                if(info.vecchio=="calciatore"){
+                    document.getElementById("profilivicini").innerHTML="Società nelle vicinanze";
+                }
+                else{
+                    document.getElementById("profilivicini").innerHTML="Calciatori nelle vicinanze";
                 }
                 getNearest();
               }
@@ -83,19 +88,18 @@ var info;
         window.location.href="user.php?username="+username;
     }
 
-    var user;
     function getNearest(){
         var xhr = new XMLHttpRequest();
           var url="getNearestPlace.php";
-          url+="?lat="+info.latitudine;
-          url+="&long="+info.longitudine;
+          url+="?lat="+"<?php echo $_SESSION["lat"]; ?>";
+          url+="&long="+"<?php echo $_SESSION["long"]; ?>";
           xhr.open("GET", url, true);
           xhr.onreadystatechange = function () {
             if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                 res=JSON.parse(xhr.responseText);
-                user=res;
                 let div1=document.getElementById("vicinanza");
                 for (i=0;i<res.length;i++){
+                    
                     var div2 = document.createElement("div");
                     div2.setAttribute("id","elemento"+i);
                     div2.setAttribute("class","job-info");
