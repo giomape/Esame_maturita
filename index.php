@@ -74,6 +74,7 @@ var info;
                     document.getElementById("residenza").innerHTML="<span style='font-weight: bold;'>Città</span>: "+citta+"<span style='font-weight: bold;'> Via</span>: "+via;
                 }
                 getNearest();
+                getFollower();
               }
           }
           xhr.send();
@@ -130,6 +131,21 @@ var info;
             }
         }
         xhr.send();
+    }
+
+    function getFollower(){
+        var xhr = new XMLHttpRequest();
+          var url="getFollower.php";
+          url+="?username="+"<?php echo $_SESSION["username"]; ?>";
+          xhr.open("GET", url, true);
+          xhr.onreadystatechange = function () {
+            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                res=JSON.parse(xhr.responseText);
+                document.getElementById("seguaci").innerHTML=res["follower"];
+                document.getElementById("seguiti").innerHTML=res["following"];
+            }
+          }
+          xhr.send();
     }
     
 </script>
@@ -335,11 +351,11 @@ Notification
 <ul class="user-fw-status">
 <li>
 <h4>Following</h4>
-<span id="seguiti">45</span>
+<span id="seguiti"></span>
 </li>
 <li>
 <h4>Followers</h4>
-<span id="seguaci">45.3M</span>
+<span id="seguaci"></span>
 </li>
 </ul>
 </div>

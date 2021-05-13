@@ -79,7 +79,42 @@ var info;
                     document.getElementById("profilivicini").innerHTML="Calciatori nelle vicinanze";
                 }
                 getNearest();
+                getFollower();
+                checkFollower();
               }
+          }
+          xhr.send();
+    }
+
+    function checkFollower(){
+        var xhr = new XMLHttpRequest();
+          var url="checkFollow.php";
+          url+="?username="+"<?php echo $_GET["username"]; ?>";
+          xhr.open("GET", url, true);
+          xhr.onreadystatechange = function () {
+            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                document.getElementById("follow").innerHTML="SEGUITO";
+                document.getElementById("follow").setAttribute("onClick", "unfollow()" );
+            }
+            else if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 404) {
+                document.getElementById("follow").innerHTML="SEGUI";
+                document.getElementById("follow").setAttribute("onClick", "follow()" );
+            }
+          }
+          xhr.send();
+    }
+
+    function getFollower(){
+        var xhr = new XMLHttpRequest();
+          var url="getFollower.php";
+          url+="?username="+"<?php echo $_GET["username"]; ?>";
+          xhr.open("GET", url, true);
+          xhr.onreadystatechange = function () {
+            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                res=JSON.parse(xhr.responseText);
+                document.getElementById("seguaci").innerHTML=res["follower"];
+                document.getElementById("seguiti").innerHTML=res["following"];
+            }
           }
           xhr.send();
     }
@@ -134,6 +169,36 @@ var info;
             }
         }
         xhr.send();
+    }
+
+    function follow(){
+        var xhr = new XMLHttpRequest();
+          var url="follow.php";
+          url+="?seguito="+"<?php echo $_GET["username"]; ?>";
+          xhr.open("GET", url, true);
+          xhr.onreadystatechange = function () {
+            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                document.getElementById("follow").innerHTML="SEGUITO";
+                document.getElementById("follow").setAttribute("onClick","unfollow();");
+            }
+        }
+        xhr.send();
+        getFollower();
+    }
+
+    function unfollow(){
+        var xhr = new XMLHttpRequest();
+          var url="unfollow.php";
+          url+="?seguito="+"<?php echo $_GET["username"]; ?>";
+          xhr.open("GET", url, true);
+          xhr.onreadystatechange = function () {
+            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                document.getElementById("follow").innerHTML="SEGUI";
+                document.getElementById("follow").setAttribute("onClick","follow();");
+            }
+        }
+        xhr.send();
+        getFollower();
     }
     
 </script>
@@ -334,16 +399,20 @@ Notification
 <p style="display:none" id="maxserie"></p>
 <p style="display:none" id="currentserie"></p>
 <p style="display:none" id="residenza"></p>
+
+<br>
+<button style="float: center;color: #fff;background-color: #e44d3a;height: 40px;padding: 0 10px;text-align: center;font-size: 14px;border: 0;margin-left: 10px;cursor: pointer;font-weight: 600;" onclick="follow()" id="follow"></button>
+
 </div>
 </div>
 <ul class="user-fw-status">
 <li>
 <h4>Following</h4>
-<span id="seguiti">45</span>
+<span id="seguiti"></span>
 </li>
 <li>
 <h4>Followers</h4>
-<span id="seguaci">45.3M</span>
+<span id="seguaci"></span>
 </li>
 </ul>
 </div>
