@@ -176,6 +176,20 @@ var info;
         xhr.send();
     }
 
+    function addPost(){
+        var xhr = new XMLHttpRequest();
+        var url="inserisciPost.php";
+        url+="?titolo="+document.getElementById("titolo").value;
+        url+="&descrizione="+document.getElementById("descrizione").value;
+        xhr.open("GET", url, true);
+        xhr.onreadystatechange = function () {
+            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                alert("inserito");
+            }
+        }
+        xhr.send();
+    }
+
     function getFollower(){
         var xhr = new XMLHttpRequest();
           var url="getFollower.php";
@@ -421,75 +435,13 @@ Notification
 <div class="col-lg-6 col-md-8 no-pd">
 <div class="main-ws-sec">
 <div class="post-topbar">
-<div class="user-picy">
-<img src="" alt="">
-</div>
 <div class="post-st">
 <ul>
-<li><a class="post_project" href="#" title="">Post a Project</a></li>
-<li><a class="post-jb active" href="#" title="">Post a Job</a></li>
+<li><a class="post-jb active" href="#" title="">Crea un post</a></li>
 </ul>
 </div>
 </div>
 <div class="posts-section">
-<div class="post-bar">
-<div class="post_topbar">
-<div class="usy-dt">
-<img src="" alt="">
-<div class="usy-name">
-<h3>John Doe</h3>
-<span><img src="" alt="">3 min ago</span>
-</div>
-</div>
-<div class="ed-opts">
-<a href="#" title="" class="ed-opts-open"><i class="la la-ellipsis-v"></i></a>
-<ul class="ed-options">
-<li><a href="#" title="">Edit Post</a></li>
-<li><a href="#" title="">Unsaved</a></li>
-<li><a href="#" title="">Unbid</a></li>
-<li><a href="#" title="">Close</a></li>
-<li><a href="#" title="">Hide</a></li>
-</ul>
-</div>
-</div>
-<div class="epi-sec">
-<ul class="descp">
-<li><img src="" alt=""><span>Epic Coder</span></li>
-<li><img src="" alt=""><span>India</span></li>
-</ul>
-<ul class="bk-links">
-<li><a href="#" title=""><i class="la la-bookmark"></i></a></li>
-<li><a href="#" title=""><i class="la la-envelope"></i></a></li>
-</ul>
-</div>
-<div class="job_descp">
-<h3>Senior Wordpress Developer</h3>
-<ul class="job-dt">
-<li><a href="#" title="">Full Time</a></li>
-<li><span>$30 / hr</span></li>
-</ul>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam luctus hendrerit metus, ut ullamcorper quam finibus at. Etiam id magna sit amet... <a href="#" title="">view more</a></p>
-<ul class="skill-tags">
-<li><a href="#" title="">HTML</a></li>
-<li><a href="#" title="">PHP</a></li>
-<li><a href="#" title="">CSS</a></li>
-<li><a href="#" title="">Javascript</a></li>
-<li><a href="#" title="">Wordpress</a></li>
-</ul>
-</div>
-<div class="job-status-bar">
-<ul class="like-com">
-<li>
-<a href="#"><i class="fas fa-heart"></i> Like</a>
-<img src="" alt="">
-<span>25</span>
-</li>
-<li><a href="#" class="com"><i class="fas fa-comment-alt"></i> Comment 15</a></li>
-</ul>
-<a href="#"><i class="fas fa-eye"></i>Views 50</a>
-</div>
-</div>
-
 <div class="post-bar">
 <div class="post_topbar">
 <div class="usy-dt">
@@ -548,126 +500,7 @@ Notification
 <a href="#"><i class="fas fa-eye"></i>Views 50</a>
 </div>
 </div>
-<div class="posty">
-<div class="post-bar no-margin">
-<div class="post_topbar">
-<div class="usy-dt">
-<img src="" alt="">
-<div class="usy-name">
-<h3>John Doe</h3>
-<span><img src="" alt="">3 min ago</span>
-</div>
-</div>
-<div class="ed-opts">
-<a href="#" title="" class="ed-opts-open"><i class="la la-ellipsis-v"></i></a>
-<ul class="ed-options">
-<li><a href="#" title="">Edit Post</a></li>
-<li><a href="#" title="">Unsaved</a></li>
-<li><a href="#" title="">Unbid</a></li>
-<li><a href="#" title="">Close</a></li>
-<li><a href="#" title="">Hide</a></li>
-</ul>
-</div>
-</div>
-<div class="epi-sec">
-<ul class="descp">
-<li><img src="" alt=""><span>Epic Coder</span></li>
-<li><img src="" alt=""><span>India</span></li>
-</ul>
-<ul class="bk-links">
-<li><a href="#" title=""><i class="la la-bookmark"></i></a></li>
-<li><a href="#" title=""><i class="la la-envelope"></i></a></li>
-</ul>
-</div>
-<div class="job_descp">
-<h3>Senior Wordpress Developer</h3>
-<ul class="job-dt">
-<li><a href="#" title="">Full Time</a></li>
-<li><span>$30 / hr</span></li>
-</ul>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam luctus hendrerit metus, ut ullamcorper quam finibus at. Etiam id magna sit amet... <a href="#" title="">view more</a></p>
-<ul class="skill-tags">
-<li><a href="#" title="">HTML</a></li>
-<li><a href="#" title="">PHP</a></li>
-<li><a href="#" title="">CSS</a></li>
-<li><a href="#" title="">Javascript</a></li>
-<li><a href="#" title="">Wordpress</a></li>
-</ul>
-</div>
-<div class="job-status-bar">
-<ul class="like-com">
-<li>
-<a href="#"><i class="fas fa-heart"></i> Like</a>
-<img src="" alt="">
-<span>25</span>
-</li>
-<li><a href="#" class="com"><i class="fas fa-comment-alt"></i> Comment 15</a></li>
-</ul>
-<a href="#"><i class="fas fa-eye"></i>Views 50</a>
-</div>
-</div>
-<div class="comment-section">
-<a href="#" class="plus-ic">
-<i class="la la-plus"></i>
-</a>
-<div class="comment-sec">
-<ul>
-<li>
-<div class="comment-list">
-<div class="bg-img">
-<img src="" alt="">
-</div>
-<div class="comment">
-<h3>John Doe</h3>
-<span><img src="" alt=""> 3 min ago</span>
-<p>Lorem ipsum dolor sit amet, </p>
-<a href="#" title="" class="active"><i class="fa fa-reply-all"></i>Reply</a>
-</div>
-</div>
-<ul>
-<li>
-<div class="comment-list">
-<div class="bg-img">
-<img src="" alt="">
-</div>
-<div class="comment">
-<h3>John Doe</h3>
-<span><img src="" alt=""> 3 min ago</span>
-<p>Hi John </p>
-<a href="#" title=""><i class="fa fa-reply-all"></i>Reply</a>
-</div>
-</div>
-</li>
-</ul>
-</li>
-<li>
-<div class="comment-list">
-<div class="bg-img">
-<img src="" alt="">
-</div>
-<div class="comment">
-<h3>John Doe</h3>
-<span><img src="" alt=""> 3 min ago</span>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam luctus hendrerit metus, ut ullamcorper quam finibus at.</p>
-<a href="#" title=""><i class="fa fa-reply-all"></i>Reply</a>
-</div>
-</div>
-</li>
-</ul>
-</div>
-<div class="post-comment">
-<div class="cm_img">
-<img src="" alt="">
-</div>
-<div class="comment_box">
-<form>
-<input type="text" placeholder="Post a comment">
-<button type="submit">Send</button>
-</form>
-</div>
-</div>
-</div>
-</div>
+
 </div>
 </div>
 </div>
@@ -689,105 +522,27 @@ Notification
 </div>
 </div>
 </main>
-<div class="post-popup pst-pj">
-<div class="post-project">
-<h3>Post a project</h3>
-<div class="post-project-fields">
-<form>
-<div class="row">
-<div class="col-lg-12">
-<input type="text" name="title" placeholder="Title">
-</div>
-<div class="col-lg-12">
-<div class="inp-field">
-<select>
-<option>Category</option>
-<option>Category 1</option>
-<option>Category 2</option>
-<option>Category 3</option>
-</select>
-</div>
-</div>
-<div class="col-lg-12">
-<input type="text" name="skills" placeholder="Skills">
-</div>
-<div class="col-lg-12">
-<div class="price-sec">
-<div class="price-br">
-<input type="text" name="price1" placeholder="Price">
-<i class="la la-dollar"></i>
-</div>
-<span>To</span>
-<div class="price-br">
-<input type="text" name="price1" placeholder="Price">
-<i class="la la-dollar"></i>
-</div>
-</div>
-</div>
-<div class="col-lg-12">
-<textarea name="description" placeholder="Description"></textarea>
-</div>
-<div class="col-lg-12">
-<ul>
-<li><button class="active" type="submit" value="post">Post</button></li>
-<li><a href="#" title="">Cancel</a></li>
-</ul>
-</div>
-</div>
-</form>
-</div>
-<a href="#" title=""><i class="la la-times-circle-o"></i></a>
-</div>
-</div>
 <div class="post-popup job_post">
 <div class="post-project">
-<h3>Post a job</h3>
+<h3>Crea un post</h3>
 <div class="post-project-fields">
 <form>
 <div class="row">
 <div class="col-lg-12">
-<input type="text" name="title" placeholder="Title">
+<input type="text" id="titolo" placeholder="Titolo">
 </div>
 <div class="col-lg-12">
-<div class="inp-field">
-<select>
-<option>Category</option>
-<option>Category 1</option>
-<option>Category 2</option>
-<option>Category 3</option>
-</select>
-</div>
-</div>
-<div class="col-lg-12">
-<input type="text" name="skills" placeholder="Skills">
-</div>
-<div class="col-lg-6">
-<div class="price-br">
-<input type="text" name="price1" placeholder="Price">
-<i class="la la-dollar"></i>
-</div>
-</div>
-<div class="col-lg-6">
-<div class="inp-field">
-<select>
-<option>Full Time</option>
-<option>Half time</option>
-</select>
-</div>
-</div>
-<div class="col-lg-12">
-<textarea name="description" placeholder="Description"></textarea>
+<textarea id="descrizione" placeholder="Descrizione"></textarea>
 </div>
 <div class="col-lg-12">
 <ul>
-<li><button class="active" type="submit" value="post">Post</button></li>
-<li><a href="#" title="">Cancel</a></li>
+<input type="button" style="float: center;color: #fff;background-color: #e44d3a;height: 40px;padding: 0 10px;text-align: center;font-size: 14px;border: 0;margin-left: 10px;cursor: pointer;font-weight: 600;" onclick="addPost()" id="posta" value="POST">
 </ul>
 </div>
 </div>
 </form>
 </div>
-<a href="#" title=""><i class="la la-times-circle-o"></i></a>
+<a href="#" title=""><i class="fas fa-times"></i></a>
 </div>
 </div>
 
