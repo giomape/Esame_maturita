@@ -62,6 +62,7 @@ var info;
                     document.getElementById("piede").innerHTML="<span style='font-weight: bold;'>Piede</span>: "+info.piede;
                     document.getElementById("residenza").innerHTML="<span style='font-weight: bold;'>Città</span>: "+citta+"<span style='font-weight: bold;'> Via</span>: "+via;
                     document.getElementById("profilivicini").innerHTML="Società nelle vicinanze";
+                    document.getElementById("top_profile_title").innerHTML="Più popolari";
                 }
                 else{
                     document.getElementById("immagine").src="team_image.svg";
@@ -72,9 +73,11 @@ var info;
                     document.getElementById("nome").innerHTML="<span style='font-weight: bold;'>Nome società</span>: "+info.nome;
                     document.getElementById("currentserie").innerHTML="<span style='font-weight: bold;'>Serie corrente</span>: "+info.current_serie;
                     document.getElementById("residenza").innerHTML="<span style='font-weight: bold;'>Città</span>: "+citta+"<span style='font-weight: bold;'> Via</span>: "+via;
+                    document.getElementById("top_profile_title").innerHTML="Più popolari";
                 }
                 getNearest();
                 getFollower();
+                getTopProfile();
               }
           }
           xhr.send();
@@ -127,6 +130,46 @@ var info;
                     var cifra=(res[i].distanza)*1;
                     document.getElementById("distanza"+i).innerHTML=cifra.toFixed(1)+" km";
                     if(i==14){i=res.length;}
+                }
+            }
+        }
+        xhr.send();
+    }
+
+    function getTopProfile(){
+        var xhr = new XMLHttpRequest();
+          var url="topProfile.php";
+          xhr.open("GET", url, true);
+          xhr.onreadystatechange = function () {
+            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                res=JSON.parse(xhr.responseText);
+                let div1=document.getElementById("suggeriti");
+                for (i=0;i<res.length;i++){
+                    var div2 = document.createElement("div");
+                    div2.setAttribute("id","element"+i);
+                    div2.setAttribute("class","suggestion-usd");
+                    div1.appendChild(div2);
+                    var div3 = document.createElement("div");
+                    div3.setAttribute("id","dettagl"+i);
+                    div3.setAttribute("class","sgt-text");
+                    div2.appendChild(div3);
+                    var username = document.createElement("h4");
+                    username.setAttribute("id","usernam"+i);
+                    username.addEventListener("click", function(event){
+                        getUser(event.target.innerText);
+                    });
+                    username.setAttribute("style","cursor:pointer");
+                    div3.appendChild(username);
+                    document.getElementById("usernam"+i).innerHTML=res[i].username;
+                    var current = document.createElement("span");
+                    current.setAttribute("id","curren"+i);
+                    div3.appendChild(current);
+                    document.getElementById("curren"+i).innerHTML=res[i].current_serie;
+                    var numero = document.createElement("span");
+                    numero.setAttribute("id","numer"+i);
+                    div2.appendChild(numero);
+                    document.getElementById("numer"+i).innerHTML=res[i].numero;
+                    if(i==5){i=res.length;}
                 }
             }
         }
@@ -361,77 +404,16 @@ Notification
 </div>
 <div class="suggestions full-width">
 <div class="sd-title">
-<h3>Suggestions</h3>
-<i class="la la-ellipsis-v"></i>
-</div>
-<div class="suggestions-list">
-<div class="suggestion-usd">
-<img src="" alt="">
-<div class="sgt-text">
-<h4>Jessica William</h4>
-<span>Graphic Designer</span>
-</div>
-<span><i class="la la-plus"></i></span>
-</div>
-<div class="suggestion-usd">
-<img src="" alt="">
-<div class="sgt-text">
-<h4>John Doe</h4>
-<span>PHP Developer</span>
-</div>
-<span><i class="la la-plus"></i></span>
-</div>
-<div class="suggestion-usd">
-<img src="" alt="">
-<div class="sgt-text">
-<h4>Poonam</h4>
-<span>Wordpress Developer</span>
-</div>
-<span><i class="la la-plus"></i></span>
-</div>
-<div class="suggestion-usd">
-<img src="" alt="">
-<div class="sgt-text">
-<h4>Bill Gates</h4>
-<span>C & C++ Developer</span>
-</div>
-<span><i class="la la-plus"></i></span>
-</div>
-<div class="suggestion-usd">
-<img src="" alt="">
-<div class="sgt-text">
-<h4>Jessica William</h4>
-<span>Graphic Designer</span>
-</div>
-<span><i class="la la-plus"></i></span>
-</div>
-<div class="suggestion-usd">
-<img src="" alt="">
-<div class="sgt-text">
-<h4>John Doe</h4>
-<span>PHP Developer</span>
-</div>
-<span><i class="la la-plus"></i></span>
-</div>
-<div class="view-more">
-<a href="#" title="">View More</a>
-</div>
+<h3 id="top_profile_title"></h3>
+</div>  
+<div class="suggestions-list" id="suggeriti">
+
 </div>
 </div>
 <div class="tags-sec full-width">
-<ul>
-<li><a href="#" title="">Help Center</a></li>
-<li><a href="#" title="">About</a></li>
-<li><a href="#" title="">Privacy Policy</a></li>
-<li><a href="#" title="">Community Guidelines</a></li>
-<li><a href="#" title="">Cookies Policy</a></li>
-<li><a href="#" title="">Career</a></li>
-<li><a href="#" title="">Language</a></li>
-<li><a href="#" title="">Copyright Policy</a></li>
-</ul>
 <div class="cp-sec">
 <img src="" alt="">
-<p><img src="" alt="">Copyright 2019</p>
+<p><img src="" alt="">Copyright 2021</p>
 </div>
 </div>
 </div>
