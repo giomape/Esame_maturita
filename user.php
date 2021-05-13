@@ -61,8 +61,9 @@ var info;
                     document.getElementById("maxserie").innerHTML="<span style='font-weight: bold;'>Massima serie raggiunta</span>: "+info.max_serie;
                     document.getElementById("piede").innerHTML="<span style='font-weight: bold;'>Piede</span>: "+info.piede;
                     document.getElementById("residenza").innerHTML="<span style='font-weight: bold;'>Città</span>: "+citta+"<span style='font-weight: bold;'> Via</span>: "+via;
+                    document.getElementById("top_profile_title").innerHTML="Più popolari";
                     
-                }
+                }  
                 else{
                     document.getElementById("immagine").src="team_image.svg";
                     document.getElementById("nome").style.display="block";
@@ -71,6 +72,7 @@ var info;
                     document.getElementById("nome").innerHTML="<span style='font-weight: bold;'>Nome società</span>: "+info.nome;
                     document.getElementById("currentserie").innerHTML="<span style='font-weight: bold;'>Serie corrente</span>: "+info.current_serie;
                     document.getElementById("residenza").innerHTML="<span style='font-weight: bold;'>Città</span>: "+citta+"<span style='font-weight: bold;'> Via</span>: "+via;
+                    document.getElementById("top_profile_title").innerHTML="Più popolari";
                 }
                 if(info.vecchio=="calciatore"){
                     document.getElementById("profilivicini").innerHTML="Società nelle vicinanze";
