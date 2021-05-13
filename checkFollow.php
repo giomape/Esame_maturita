@@ -41,7 +41,6 @@ echo $e;
 $id=array();
 
 while ($data = $stmt->fetch(PDO::FETCH_ASSOC)){
-    echo var_dump($id);
     $id=array('id_calciatore' => $data["calciatore"], 'id_societa' => $data["societa"]);
 }
 
@@ -57,8 +56,6 @@ else if($_SESSION["type"]=="societa"){
     $sql = "SELECT count(id_societa) as num from follow_societa where id_calciatore=? and id_societa=?";
 }
 
-echo var_dump($sql);
-
 try
 { 
 $stmt = $db->prepare($sql);
@@ -71,7 +68,6 @@ echo $e;
 
 $conta=0;
 while ($data = $stmt->fetch(PDO::FETCH_ASSOC)){
-    echo var_dump($data);
     if($data["num"]==0){
         $conta++;
     }
