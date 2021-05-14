@@ -407,7 +407,7 @@
             document.getElementById("perrata").style.display="inline-block";
             document.getElementById("psbagliata").style.display="none";
             document.getElementById("mailerrata").style.display="none";
-            vai=false;
+            vai=true;
             return;
           }
           else if(!document.getElementById("password").value.match(regolaPassword)) {
@@ -418,7 +418,7 @@
             document.getElementById("psbagliata").style.display="inline-block";
             document.getElementById("perrata").style.display="none";
             document.getElementById("mailerrata").style.display="none";
-            vai=false;
+            vai=true;
             return;
           } 
           else {
