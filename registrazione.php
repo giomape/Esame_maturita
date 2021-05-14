@@ -427,6 +427,13 @@
         function minuscolo(){
           document.getElementById("username").value=document.getElementById("username").value.toLowerCase();
         }
+
+        function togliSpazi(){
+          var str = document.getElementById("username").value; 
+          var res = str.replace(" ", "");
+          document.getElementById("username").value = res;
+        }
+
     </script>
   </head>
 
@@ -466,7 +473,7 @@
           <input type="text" name="email" id="email" placeholder="Email" required/>
           <p id="mailerrata" style="color: red; display: none;">L'email inserita non è valida</p><br>
           <label id="icon" for="username"><i class="fas fa-user"></i></label>
-          <input type="text" name="username" id="username" placeholder="Username" oninput="minuscolo()" onchange="checkUsername()" required/>
+          <input type="text" name="username" id="username" placeholder="Username" oninput="minuscolo();togliSpazi()" onchange="checkUsername()" required/>
           <p id="usererrato" style="color: red; display: none;">Username non disponibile, selezionarne un altro</p><br>
           <label id="icon" for="password"><i class="fas fa-unlock-alt"></i></label>
           <input type="password" name="password" id="password" placeholder="Password" required/>
