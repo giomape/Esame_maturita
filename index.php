@@ -78,6 +78,7 @@ var info;
                 getNearest();
                 getFollower();
                 getTopProfile();
+                getPost();
               }
           }
           xhr.send();
@@ -184,7 +185,10 @@ var info;
         xhr.open("GET", url, true);
         xhr.onreadystatechange = function () {
             if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                alert("inserito");
+                $(".post-popup.job_post").removeClass("active");
+                $(".wrapper").removeClass("overlay");
+                window.location.reload();
+                return false;
             }
         }
         xhr.send();
@@ -203,6 +207,92 @@ var info;
             }
           }
           xhr.send();
+    }
+
+    function getPost(){
+        var xhr = new XMLHttpRequest();
+        var url="getPostHome.php";
+        xhr.open("GET", url, true);
+        xhr.onreadystatechange = function () {
+            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                res=JSON.parse(xhr.responseText);
+                console.log(res);
+                let div1=document.getElementById("sezionepost");
+                if(res.length==0){
+                    var div2 = document.createElement("div");
+                    div2.setAttribute("id","elemen"+i);
+                    div2.setAttribute("class","post-bar");
+                    div1.appendChild(div2);
+                    var div6 = document.createElement("div");
+                    div6.setAttribute("id","det"+i);
+                    div6.setAttribute("class","job_descp");
+                    div2.appendChild(div6);
+                    var titolo = document.createElement("h3");
+                    titolo.setAttribute("id","titolo"+i);
+                    div6.appendChild(titolo);
+                    document.getElementById("titolo"+i).innerHTML="Non segui ancora nessuno";
+                    var descrizione = document.createElement("p");
+                    descrizione.setAttribute("id","descrizione"+i);
+                    div6.appendChild(descrizione);
+                    document.getElementById("descrizione"+i).innerHTML="Cerca un profilo o clicca sui suggeriti per iniziare a seguire qualcuno";
+                }
+                else{
+                    for (i=0;i<res.length;i++){
+                    var div2 = document.createElement("div");
+                    div2.setAttribute("id","elemen"+i);
+                    div2.setAttribute("class","post-bar");
+                    div1.appendChild(div2);
+                    var div3 = document.createElement("div");
+                    div3.setAttribute("id","dettag"+i);
+                    div3.setAttribute("class","post_topbar");
+                    div2.appendChild(div3);
+                    var div4 = document.createElement("div");
+                    div4.setAttribute("id","detta"+i);
+                    div4.setAttribute("class","usy-dt");
+                    div3.appendChild(div4);
+                    var div5 = document.createElement("div");
+                    div5.setAttribute("id","dett"+i);
+                    div5.setAttribute("class","usy-name");
+                    div4.appendChild(div5);
+                    var username = document.createElement("h3");
+                    username.setAttribute("id","userna"+i);
+                    username.addEventListener("click", function(event){
+                        getUser(event.target.innerText);
+                    });
+                    username.setAttribute("style","cursor:pointer");
+                    div5.appendChild(username);
+                    document.getElementById("userna"+i).innerHTML=res[i].username;
+                    var data = document.createElement("span");
+                    data.setAttribute("id","data"+i);
+                    div5.appendChild(data);
+                    document.getElementById("data"+i).innerHTML=res[i].data;
+
+                    var div6 = document.createElement("div");
+                    div6.setAttribute("id","det"+i);
+                    div6.setAttribute("class","job_descp");
+                    div2.appendChild(div6);
+                    var titolo = document.createElement("h3");
+                    titolo.setAttribute("id","titolo"+i);
+                    div6.appendChild(titolo);
+                    document.getElementById("titolo"+i).innerHTML="<br>"+res[i].titolo;
+                    var descrizione = document.createElement("p");
+                    descrizione.setAttribute("id","descrizione"+i);
+                    div6.appendChild(descrizione);
+                    document.getElementById("descrizione"+i).innerHTML=res[i].descrizione;
+                    var ul=document.createElement("ul");
+                    ul.setAttribute("class","skill-tags");
+                    div6.appendChild(ul);
+                    var li=document.createElement("li");
+                    ul.appendChild(li);
+                    var current_serie = document.createElement("a");
+                    current_serie.setAttribute("id","current_serie"+i);
+                    li.appendChild(current_serie);
+                    document.getElementById("current_serie"+i).innerHTML=res[i].current_serie;
+                    }
+                }
+            }
+        }
+        xhr.send();
     }
     
 </script>
@@ -226,19 +316,13 @@ var info;
 <ul>
 <li>
 <a href="index.php" title="">
-<span><img src="" alt=""></span>
 Home
 </a>
 </li>
 <li>
-<a href="companies.html" title="">
-<span><img src="" alt=""></span>
-Companies
+<a href="userPost.php" title="">
+Miei post
 </a>
-<ul>
-<li><a href="companies.html" title="">Companies</a></li>
-<li><a href="company-profile.html" title="">Company Profile</a></li>
-</ul>
 </li>
 <li>
 <a href="projects.html" title="">
@@ -441,65 +525,8 @@ Notification
 </ul>
 </div>
 </div>
-<div class="posts-section">
-<div class="post-bar">
-<div class="post_topbar">
-<div class="usy-dt">
-<img src="" alt="">
-<div class="usy-name">
-<h3>John Doe</h3>
-<span><img src="" alt="">3 min ago</span>
-</div>
-</div>
-<div class="ed-opts">
-<a href="#" title="" class="ed-opts-open"><i class="la la-ellipsis-v"></i></a>
-<ul class="ed-options">
-<li><a href="#" title="">Edit Post</a></li>
-<li><a href="#" title="">Unsaved</a></li>
-<li><a href="#" title="">Unbid</a></li>
-<li><a href="#" title="">Close</a></li>
- <li><a href="#" title="">Hide</a></li>
-</ul>
-</div>
-</div>
-<div class="epi-sec">
-<ul class="descp">
-<li><img src="" alt=""><span>Epic Coder</span></li>
-<li><img src="" alt=""><span>India</span></li>
-</ul>
-<ul class="bk-links">
-<li><a href="#" title=""><i class="la la-bookmark"></i></a></li>
-<li><a href="#" title=""><i class="la la-envelope"></i></a></li>
-<li><a href="#" title="" class="bid_now">Bid Now</a></li>
-</ul>
-</div>
-<div class="job_descp">
-<h3>Senior Wordpress Developer</h3>
-<ul class="job-dt">
-<li><a href="#" title="">Full Time</a></li>
-<li><span>$30 / hr</span></li>
-</ul>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam luctus hendrerit metus, ut ullamcorper quam finibus at. Etiam id magna sit amet... <a href="#" title="">view more</a></p>
-<ul class="skill-tags">
-<li><a href="#" title="">HTML</a></li>
-<li><a href="#" title="">PHP</a></li>
-<li><a href="#" title="">CSS</a></li>
-<li><a href="#" title="">Javascript</a></li>
-<li><a href="#" title="">Wordpress</a></li>
-</ul>
-</div>
-<div class="job-status-bar">
-<ul class="like-com">
-<li>
-<a href="#"><i class="fas fa-heart"></i> Like</a>
-<img src="" alt="">
-<span>25</span>
-</li>
-<li><a href="#" class="com"><i class="fas fa-comment-alt"></i> Comment 15</a></li>
-</ul>
-<a href="#"><i class="fas fa-eye"></i>Views 50</a>
-</div>
-</div>
+<div class="posts-section" id="sezionepost">
+
 
 </div>
 </div>
