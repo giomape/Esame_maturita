@@ -668,7 +668,7 @@ Notification
 <div class="col-lg-6 col-md-8 no-pd" id="principale">
 <div class="main-ws-sec">
 <div class="post-topbar">
-<textarea style="width: 85%;background-color: #fff;height: 100px;color: #b2b2b2;font-size: 15px;border: 0;padding: 0 10px;" placeholder="Inserisci il testo del messaggio" id="messaggio"></textarea>
+<textarea style="width: 85%;background-color: #fff;height: 100px;color: #b2b2b2;font-size: 15px;border: 0;padding: 0 10px;" maxlength="500" placeholder="Inserisci il testo del messaggio" id="messaggio"></textarea>
 <div class="post-st">
 <ul>
 <li><button style="float: center;color: #fff;background-color: #e44d3a;height: 40px;padding: 0 10px;text-align: center;font-size: 14px;border: 0;margin-left: 10px;cursor: pointer;font-weight: 600;" onclick="invia()" id="invia">INVIA</button></li>
