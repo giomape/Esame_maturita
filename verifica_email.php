@@ -25,6 +25,8 @@
     <link href="stile.css" rel="stylesheet">
 
     <script>
+
+    var c=0;
         function sendEmail(){
           var xhr = new XMLHttpRequest();
           var url="email_sender.php";
@@ -35,21 +37,24 @@
           xhr.send();
         }
         function controlloverifica(){
-          var xhr = new XMLHttpRequest();
-          var url="controlloverifica.php";
-          xhr.open("GET", url, true);
-          xhr.onreadystatechange = function () {
-            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-              window.location.href="index.php";
+          if(c==0){
+            var xhr = new XMLHttpRequest();
+            var url="controlloverifica.php";
+            xhr.open("GET", url, true);
+            xhr.onreadystatechange = function () {
+              if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                window.location.href="index.php";
+              }
+              else if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 401) {
+                sendEmail();
+                document.getElementById("caricamento").style.display="none";
+                document.getElementById("main").style.display="inline-block";
+                c++;
+                return;
+              }
             }
-            else if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 401) {
-              sendEmail();
-              document.getElementById("caricamento").style.display="none";
-              document.getElementById("main").style.display="inline-block";
-              return;
-            }
+            xhr.send();
           }
-          xhr.send();
         }
     </script>
   </head>

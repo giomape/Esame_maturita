@@ -28,64 +28,109 @@
 <link rel="stylesheet" type="text/css" href="css/slick-theme.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <link rel="stylesheet" type="text/css" href="css/responsive.css">
+<style>
+    @media screen and (max-width: 992px) {
+        #principale {
+            order:-1;
+        }
+    }
+</style>
+
 
 <script>
 var info;
 
     function prendiDati(){
         var xhr = new XMLHttpRequest();
-          var url="prendiDati.php";
+          var url="prendiDatiUser.php";
+          url+="?username="+"<?php echo $_GET["user"]; ?>";
           xhr.open("GET", url, true);
           xhr.onreadystatechange = function () {
             if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                 info=JSON.parse(xhr.responseText);
-                document.getElementById("username").innerHTML=info.username;
-                document.getElementById("nomeinalto").innerHTML=info.username;
-                let residenza=info.nome_residenza.split(",");
-                let citta=residenza[0];
-                let via=residenza[1];
-                var div=document.getElementById("qui");
-                var datalist=document.createElement("datalist");
-                datalist.setAttribute("id","nomiutente");
-                div.appendChild(datalist);
-                if(info.tipo=="calciatore"){
-                    document.getElementById("immagine").src="player_image.svg";
-                    document.getElementById("biografia").style.display="block";
-                    document.getElementById("nome").style.display="block";
-                    document.getElementById("data_nascita").style.display="block";
-                    document.getElementById("currentserie").style.display="block";
-                    document.getElementById("maxserie").style.display="block";
-                    document.getElementById("residenza").style.display="block";
-                    document.getElementById("piede").style.display="block";
+                if(info.tipo!="<?php echo $_SESSION["type"]; ?>"){
+                    if(info.length==0){
+                        window.location.href="index.php";
+                    }
+                    else{
+                        document.getElementById("username").innerHTML=info.username;
+                        document.getElementById("nomeinalto").innerHTML="<?php echo $_SESSION["username"]; ?>";
+                        let residenza=info.nome_residenza.split(",");
+                        let citta=residenza[0];
+                        let via=residenza[1];
+                        var div=document.getElementById("qui");
+                        var datalist=document.createElement("datalist");
+                        datalist.setAttribute("id","nomiutente");
+                        div.appendChild(datalist);
+                        if(info.tipo=="calciatore"){
+                            document.getElementById("immagine").src="player_image.svg";
+                            document.getElementById("biografia").style.display="block";
+                            document.getElementById("nome").style.display="block";
+                            document.getElementById("data_nascita").style.display="block";
+                            document.getElementById("currentserie").style.display="block";
+                            document.getElementById("maxserie").style.display="block";
+                            document.getElementById("residenza").style.display="block";
+                            document.getElementById("piede").style.display="block";
 
-                    document.getElementById("biografia").innerHTML="<span style='font-weight: bold;'>Biografia</span>: "+info.biografia;
-                    document.getElementById("nome").innerHTML="<span style='font-weight: bold;'>Nome</span>: "+info.nome+" "+info.cognome;
-                    document.getElementById("data_nascita").innerHTML="<span style='font-weight: bold;'>Data di nascita</span>: "+info.data_nascita;
-                    document.getElementById("currentserie").innerHTML="<span style='font-weight: bold;'>Serie corrente</span>: "+info.current_serie;
-                    document.getElementById("maxserie").innerHTML="<span style='font-weight: bold;'>Massima serie raggiunta</span>: "+info.max_serie;
-                    document.getElementById("piede").innerHTML="<span style='font-weight: bold;'>Piede</span>: "+info.piede;
-                    document.getElementById("residenza").innerHTML="<span style='font-weight: bold;'>Città</span>: "+citta+"<span style='font-weight: bold;'> Via</span>: "+via;
-                    document.getElementById("profilivicini").innerHTML="Società nelle vicinanze";
-                    document.getElementById("top_profile_title").innerHTML="Più popolari";
+                            document.getElementById("biografia").innerHTML="<span style='font-weight: bold;'>Biografia</span>: "+info.biografia;
+                            document.getElementById("nome").innerHTML="<span style='font-weight: bold;'>Nome</span>: "+info.nome+" "+info.cognome;
+                            document.getElementById("data_nascita").innerHTML="<span style='font-weight: bold;'>Data di nascita</span>: "+info.data_nascita;
+                            document.getElementById("currentserie").innerHTML="<span style='font-weight: bold;'>Serie corrente</span>: "+info.current_serie;
+                            document.getElementById("maxserie").innerHTML="<span style='font-weight: bold;'>Massima serie raggiunta</span>: "+info.max_serie;
+                            document.getElementById("piede").innerHTML="<span style='font-weight: bold;'>Piede</span>: "+info.piede;
+                            document.getElementById("residenza").innerHTML="<span style='font-weight: bold;'>Città</span>: "+citta+"<span style='font-weight: bold;'> Via</span>: "+via;
+                            document.getElementById("profilivicini").innerHTML="Società nelle vicinanze";
+                            document.getElementById("top_profile_title").innerHTML="Più popolari";
+                        }
+                        else{
+                            document.getElementById("immagine").src="team_image.svg";
+                            document.getElementById("nome").style.display="block";
+                            document.getElementById("currentserie").style.display="block";
+                            document.getElementById("residenza").style.display="block";
+                            document.getElementById("profilivicini").innerHTML="Calciatori nelle vicinanze";
+                            document.getElementById("nome").innerHTML="<span style='font-weight: bold;'>Nome società</span>: "+info.nome;
+                            document.getElementById("currentserie").innerHTML="<span style='font-weight: bold;'>Serie corrente</span>: "+info.current_serie;
+                            document.getElementById("residenza").innerHTML="<span style='font-weight: bold;'>Città</span>: "+citta+"<span style='font-weight: bold;'> Via</span>: "+via;
+                            document.getElementById("top_profile_title").innerHTML="Più popolari";
+                        }
+                        if(info.vecchio=="calciatore"){
+                            document.getElementById("profilivicini").innerHTML="Società nelle vicinanze";
+                        }
+                        else{
+                            document.getElementById("profilivicini").innerHTML="Calciatori nelle vicinanze";
+                        }
+                        addRuoli();
+                        getNearest();
+                        getFollower();
+                        checkFollower();
+                        getTopProfile();
+                        getMessage();
+                        prendiUsername();
+                
+                    }
                 }
                 else{
-                    document.getElementById("immagine").src="team_image.svg";
-                    document.getElementById("nome").style.display="block";
-                    document.getElementById("currentserie").style.display="block";
-                    document.getElementById("residenza").style.display="block";
-                    document.getElementById("profilivicini").innerHTML="Calciatori nelle vicinanze";
-                    document.getElementById("nome").innerHTML="<span style='font-weight: bold;'>Nome società</span>: "+info.nome;
-                    document.getElementById("currentserie").innerHTML="<span style='font-weight: bold;'>Serie corrente</span>: "+info.current_serie;
-                    document.getElementById("residenza").innerHTML="<span style='font-weight: bold;'>Città</span>: "+citta+"<span style='font-weight: bold;'> Via</span>: "+via;
-                    document.getElementById("top_profile_title").innerHTML="Più popolari";
+                    window.location.href="index.php";
                 }
-                addRuoli();
-                getNearest();
-                getFollower();
-                getTopProfile();
-                getPost();
-                prendiUsername();
-              }
+            }
+        }
+        xhr.send();
+    }
+
+    function checkFollower(){
+        var xhr = new XMLHttpRequest();
+          var url="checkFollow.php";
+          url+="?username="+"<?php echo $_GET["user"]; ?>";
+          xhr.open("GET", url, true);
+          xhr.onreadystatechange = function () {
+            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                document.getElementById("follow").innerHTML="SEGUITO";
+                document.getElementById("follow").setAttribute("onClick", "unfollow()" );
+            }
+            else if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 404) {
+                document.getElementById("follow").innerHTML="SEGUI";
+                document.getElementById("follow").setAttribute("onClick", "follow()" );
+            }
           }
           xhr.send();
     }
@@ -126,8 +171,8 @@ var info;
     function getNearest(){
         var xhr = new XMLHttpRequest();
           var url="getNearestPlace.php";
-          url+="?lat="+info.latitudine;
-          url+="&long="+info.longitudine;
+          url+="?lat="+"<?php echo $_SESSION["lat"]; ?>";
+          url+="&long="+"<?php echo $_SESSION["long"]; ?>";
           xhr.open("GET", url, true);
           xhr.onreadystatechange = function () {
             if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
@@ -211,27 +256,10 @@ var info;
         xhr.send();
     }
 
-    function addPost(){
-        var xhr = new XMLHttpRequest();
-        var url="inserisciPost.php";
-        url+="?titolo="+document.getElementById("titolo").value;
-        url+="&descrizione="+document.getElementById("descrizione").value;
-        xhr.open("GET", url, true);
-        xhr.onreadystatechange = function () {
-            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                $(".post-popup.job_post").removeClass("active");
-                $(".wrapper").removeClass("overlay");
-                window.location.reload();
-                return false;
-            }
-        }
-        xhr.send();
-    }
-
     function getFollower(){
         var xhr = new XMLHttpRequest();
           var url="getFollower.php";
-          url+="?username="+"<?php echo $_SESSION["username"]; ?>";
+          url+="?username="+"<?php echo $_GET["user"]; ?>";
           xhr.open("GET", url, true);
           xhr.onreadystatechange = function () {
             if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
@@ -243,117 +271,74 @@ var info;
           xhr.send();
     }
 
-    var array_post;
-    function getPost(){
+    setInterval(getMessage, 2000);
+
+    let numeromessaggi=0;
+    function getMessage(){
         var xhr = new XMLHttpRequest();
-        var url="getPostUtente.php";
+        var url="getMessage.php";
+        url+="?username="+"<?php echo $_GET["user"]; ?>";
         xhr.open("GET", url, true);
         xhr.onreadystatechange = function () {
             if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                array_post=JSON.parse(xhr.responseText);
-                console.log(array_post);
-                let div1=document.getElementById("sezionepost");
-                if(array_post.length==0){
-                    var div2 = document.createElement("div");
-                    div2.setAttribute("id","elemen"+i);
-                    div2.setAttribute("class","post-bar");
-                    div1.appendChild(div2);
-                    var div6 = document.createElement("div");
-                    div6.setAttribute("id","det"+i);
-                    div6.setAttribute("class","job_descp");
-                    div2.appendChild(div6);
-                    var titolo = document.createElement("h3");
-                    titolo.setAttribute("id","titolo"+i);
-                    div6.appendChild(titolo);
-                    document.getElementById("titolo"+i).innerHTML="Nessun post creato";
-                    var descrizione = document.createElement("p");
-                    descrizione.setAttribute("id","descrizione"+i);
-                    div6.appendChild(descrizione);
-                    document.getElementById("descrizione"+i).innerHTML="Clicca su Crea un post per iniziare a condividere le tue esperienze";
+                messaggi=JSON.parse(xhr.responseText);
+                if(messaggi.lenght!=0){
+                
+                    var div2;
+                    var div1=document.getElementById("sezionepost");;
+                    if(numeromessaggi==0){
+                        div2 = document.createElement("div");
+                        div2.setAttribute("id","elemen");
+                        div2.setAttribute("class","post-bar");
+                        div2.style.height="50vh";
+                        div2.style.overflowY="scroll";
+                        div1.appendChild(div2);
+                    }
+                    for (i=0;i<messaggi.length;i++){
+                        let data1=Date.parse(messaggi[i].data);
+                        if(i>=numeromessaggi){
+                            if(messaggi[i].mittente=='<?php echo $_SESSION["username"]; ?>'){
+                                var div3 = document.createElement("div");
+                                div3.setAttribute("id","chat"+i);
+                                div3.setAttribute("class","chat-msg");
+                                var div=document.getElementById("elemen");
+                                div.appendChild(div3);
+                                var testo = document.createElement("p");
+                                testo.setAttribute("id","testo"+i);
+                                div3.appendChild(testo);
+                                document.getElementById("testo"+i).innerHTML=messaggi[i].messaggio;
+                                var data = document.createElement("span");
+                                data.setAttribute("id","time"+i);
+                                div3.appendChild(data);
+                                document.getElementById("time"+i).innerHTML=messaggi[i].data;
+                                document.getElementById("elemen").scrollTop=100000;
+                            }
+                            else{
+                                var div3 = document.createElement("div");
+                                div3.setAttribute("id","chat"+i);
+                                div3.setAttribute("class","chat-msg st2");
+                                var div=document.getElementById("elemen");
+                                div.appendChild(div3);
+                                
+                                var testo = document.createElement("p");
+                                testo.setAttribute("id","testo"+i);
+                                div3.appendChild(testo);
+                                document.getElementById("testo"+i).innerHTML=messaggi[i].messaggio;
+                                var data = document.createElement("span");
+                                data.setAttribute("id","time"+i);
+                                div3.appendChild(data);
+                                document.getElementById("time"+i).innerHTML=messaggi[i].data;
+                            }
+                        }
+                    }
+                    numeromessaggi=messaggi.length;
                 }
                 else{
-                    for (i=0;i<array_post.length;i++){
-                    var div2 = document.createElement("div");
-                    div2.setAttribute("id","elemen"+i);
-                    div2.setAttribute("class","post-bar");
-                    div1.appendChild(div2);
-                    var div3 = document.createElement("div");
-                    div3.setAttribute("id","dettag"+i);
-                    div3.setAttribute("class","post_topbar");
-                    div2.appendChild(div3);
-                    var div4 = document.createElement("div");
-                    div4.setAttribute("id","detta"+i);
-                    div4.setAttribute("class","usy-dt");
-                    div3.appendChild(div4);
-                    var div5 = document.createElement("div");
-                    div5.setAttribute("id","dett"+i);
-                    div5.setAttribute("class","usy-name");
-                    div4.appendChild(div5);
-                    var username = document.createElement("h3");
-                    username.setAttribute("id","userna"+i);
-                    username.addEventListener("click", function(event){
-                        getUser(event.target.innerText);
-                    });
-                    username.setAttribute("style","cursor:pointer");
-                    div5.appendChild(username);
-                    document.getElementById("userna"+i).innerHTML=array_post[i].username;
-                    var data = document.createElement("span");
-                    data.setAttribute("id","data"+i);
-                    div5.appendChild(data);
-                    document.getElementById("data"+i).innerHTML=array_post[i].data;
 
-                    var ul1=document.createElement("ul");
-                    ul1.setAttribute("class","bk-links");
-                    div3.appendChild(ul1);
-                    var li1=document.createElement("li");
-                    ul1.appendChild(li1);
-                    var del=document.createElement("i");
-                    del.setAttribute("class", "far fa-trash-alt");
-                    del.setAttribute("id", i);
-                    del.addEventListener("click", function(event){
-                        deletePost(event.target.id);
-                    });
-                    li1.appendChild(del);
-
-                    var div6 = document.createElement("div");
-                    div6.setAttribute("id","det"+i);
-                    div6.setAttribute("class","job_descp");
-                    div2.appendChild(div6);
-                    var titolo = document.createElement("h3");
-                    titolo.setAttribute("id","titolo"+i);
-                    div6.appendChild(titolo);
-                    document.getElementById("titolo"+i).innerHTML="<br>"+array_post[i].titolo;
-                    var descrizione = document.createElement("p");
-                    descrizione.setAttribute("id","descrizione"+i);
-                    div6.appendChild(descrizione);
-                    document.getElementById("descrizione"+i).innerHTML=array_post[i].descrizione;
-                    var ul=document.createElement("ul");
-                    ul.setAttribute("class","skill-tags");
-                    div6.appendChild(ul);
-                    var li=document.createElement("li");
-                    ul.appendChild(li);
-                    var current_serie = document.createElement("a");
-                    current_serie.setAttribute("id","current_serie"+i);
-                    li.appendChild(current_serie);
-                    document.getElementById("current_serie"+i).innerHTML=array_post[i].current_serie;
-                    }
                 }
             }
         }
         xhr.send();
-    }
-
-    function deletePost(id){
-        var xhr = new XMLHttpRequest();
-          var url="deletePost.php";
-          url+="?idpost="+array_post[id].id_post;
-          xhr.open("GET", url, true);
-          xhr.onreadystatechange = function () {
-            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                window.location.reload();
-            }
-          }
-          xhr.send();
     }
 
     var usernameDatabase;
@@ -395,11 +380,62 @@ var info;
             return;
         }
     }
+
+    function follow(){
+        var xhr = new XMLHttpRequest();
+          var url="follow.php";
+          url+="?seguito="+"<?php echo $_GET["username"]; ?>";
+          xhr.open("GET", url, true);
+          xhr.onreadystatechange = function () {
+            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                document.getElementById("follow").innerHTML="SEGUITO";
+                document.getElementById("follow").setAttribute("onClick","unfollow();");
+            }
+        }
+        xhr.send();
+        getFollower();
+    }
+
+    function unfollow(){
+        var xhr = new XMLHttpRequest();
+          var url="unfollow.php";
+          url+="?seguito="+"<?php echo $_GET["username"]; ?>";
+          xhr.open("GET", url, true);
+          xhr.onreadystatechange = function () {
+            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                document.getElementById("follow").innerHTML="SEGUI";
+                document.getElementById("follow").setAttribute("onClick","follow();");
+            }
+        }
+        xhr.send();
+        getFollower();
+    }
+
+    function scrivi(){
+        window.location.href="message.php?user="+"<?php echo $_GET["username"]; ?>";
+    }
+
+    function invia(){
+        var xhr = new XMLHttpRequest();
+        var url="inviaMessaggio.php";
+        const params=JSON.stringify({
+            mittente: "<?php echo $_SESSION["username"]; ?>",
+            destinatario: "<?php echo $_GET["user"]; ?>",
+            messaggio: document.getElementById("messaggio").value,
+        });
+        xhr.open("POST", url, true);
+        xhr.onreadystatechange = function () {
+            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                document.getElementById("messaggio").value="";
+            }
+        }
+        xhr.send(params);
+    }
     
 </script>
 
 </head>
-<body onload="prendiDati()">
+<body onload="prendiDati()" id="body">
 <div class="wrapper">
 <header>
 <div class="container">
@@ -596,6 +632,9 @@ Notification
 <div id="ruoli">
 
 </div>
+<br>
+<button style="float: center;color: #fff;background-color: #e44d3a;height: 40px;padding: 0 10px;text-align: center;font-size: 14px;border: 0;margin-left: 10px;cursor: pointer;font-weight: 600;" onclick="follow()" id="follow"></button>
+<button style="float: center;color: #fff;background-color: #53d690;height: 40px;padding: 0 10px;text-align: center;font-size: 14px;border: 0;margin-left: 10px;cursor: pointer;font-weight: 600;" onclick="scrivi()" id="contatta">CONTATTA</button>
 
 </div>
 </div>
@@ -626,12 +665,13 @@ Notification
 </div>
 </div>
 </div>
-<div class="col-lg-6 col-md-8 no-pd">
+<div class="col-lg-6 col-md-8 no-pd" id="principale">
 <div class="main-ws-sec">
 <div class="post-topbar">
+<textarea style="width: 85%;background-color: #fff;height: 100px;color: #b2b2b2;font-size: 15px;border: 0;padding: 0 10px;" placeholder="Inserisci il testo del messaggio" id="messaggio"></textarea>
 <div class="post-st">
 <ul>
-<li><a class="post-jb active" href="#" title="">Crea un post</a></li>
+<li><button style="float: center;color: #fff;background-color: #e44d3a;height: 40px;padding: 0 10px;text-align: center;font-size: 14px;border: 0;margin-left: 10px;cursor: pointer;font-weight: 600;" onclick="invia()" id="invia">INVIA</button></li>
 </ul>
 </div>
 </div>

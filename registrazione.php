@@ -459,21 +459,21 @@
           <p id="required" style="color: red; display: none;">Alcuni campi non sono stati inseriti. Completare la registrazione</p><br>
           <div id="nomisoc">
           <label id="icon" for="names"><i class="fas fa-address-card"></i></label>
-          <input type="text" name="names" id="names" placeholder="Nome società" required/>
+          <input type="text" name="names" id="names" maxlength="255" placeholder="Nome società" required/>
           </div>
           <div id="nomi">
           <label id="icon" for="name"><i class="fas fa-address-card"></i></label>
-          <input type="text" name="name" id="name" placeholder="Nome" required/>
+          <input type="text" name="name" id="name" maxlength="255" placeholder="Nome" required/>
           <label id="icon" for="surname"><i class="fas fa-address-card"></i></label>
-          <input type="text" name="surname" id="surname" placeholder="Cognome" required/>
+          <input type="text" name="surname" id="surname" maxlength="255" placeholder="Cognome" required/>
           <label id="icon" for="data"><i class="fas fa-calendar"></i></label>
           <input type="date" name="data" id="data" required/>
           </div>
           <label id="icon" for="email"><i class="fas fa-envelope"></i></label>
-          <input type="text" name="email" id="email" placeholder="Email" required/>
+          <input type="text" name="email" maxlength="100" id="email" placeholder="Email" required/>
           <p id="mailerrata" style="color: red; display: none;">L'email inserita non è valida</p><br>
           <label id="icon" for="username"><i class="fas fa-user"></i></label>
-          <input type="text" name="username" id="username" placeholder="Username" oninput="minuscolo();togliSpazi()" onchange="checkUsername()" required/>
+          <input type="text" name="username" id="username" maxlength="50" placeholder="Username" oninput="minuscolo();togliSpazi()" onchange="checkUsername()" required/>
           <p id="usererrato" style="color: red; display: none;">Username non disponibile, selezionarne un altro</p><br>
           <label id="icon" for="password"><i class="fas fa-unlock-alt"></i></label>
           <input type="password" name="password" id="password" placeholder="Password" required/>
@@ -486,7 +486,7 @@
           <label id="icon" for="city"><i class="fas fa-location-arrow"></i></label>
           <input type="text" name="city" id="city" placeholder="Località di residenza" required/>
           <label id="icon" for="street"><i class="fas fa-map-marker"></i></label>
-          <input type="text" name="street" id="street" placeholder="Via" required/><br><br>
+          <input type="text" name="street" id="street" placeholder="Via (es. Verdi)" required/><br><br>
           <div style="text-align: center;">
           <select name="res" id="res" style="width: calc(100% - 13px);display: none;"><br>
           </select>
