@@ -44,6 +44,10 @@ var info;
                 let residenza=info.nome_residenza.split(",");
                 let citta=residenza[0];
                 let via=residenza[1];
+                var div=document.getElementById("qui");
+                var datalist=document.createElement("datalist");
+                datalist.setAttribute("id","nomiutente");
+                div.appendChild(datalist);
                 if(info.tipo=="calciatore"){
                     document.getElementById("immagine").src="player_image.svg";
                     document.getElementById("biografia").style.display="block";
@@ -75,13 +79,43 @@ var info;
                     document.getElementById("residenza").innerHTML="<span style='font-weight: bold;'>Città</span>: "+citta+"<span style='font-weight: bold;'> Via</span>: "+via;
                     document.getElementById("top_profile_title").innerHTML="Più popolari";
                 }
+                addRuoli();
                 getNearest();
                 getFollower();
                 getTopProfile();
                 getPost();
+                prendiUsername();
               }
           }
           xhr.send();
+    }
+
+    function addRuoli(){
+        var xhr = new XMLHttpRequest();
+        var url="prendiRuoli.php";
+        xhr.open("GET", url, true);
+        xhr.onreadystatechange = function () {
+            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                res=JSON.parse(xhr.responseText);
+                let div=document.getElementById("ruoli");
+                var int=document.createElement("p");
+                int.setAttribute("id", "nruoli"+i);
+                int.setAttribute("style", "font-weight: bold");
+                div.appendChild(int);
+                document.getElementById("nruoli"+i).innerHTML="Ruoli";
+                for(var i=0; i<res.length; i++){
+                    var p=document.createElement("p");
+                    p.setAttribute("id", "ruolo"+i);
+                    div.appendChild(p);
+                    document.getElementById("ruolo"+i).innerHTML=res[i].nome;
+                }
+            }
+        }
+        xhr.send();
+    }
+
+    function cerca(){
+        window.location.href="user.php?username="+document.getElementById("search").value;
     }
 
     function getUser(username){
@@ -294,6 +328,46 @@ var info;
         }
         xhr.send();
     }
+
+    var usernameDatabase;
+    function prendiUsername(){
+        var xhr = new XMLHttpRequest();
+        var url="prendiUsernameDatabase.php";
+        xhr.open("GET", url, true);
+        xhr.onreadystatechange = function () {
+            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                usernameDatabase=JSON.parse(xhr.responseText);
+            }
+        }
+        xhr.send();
+    }
+
+    function removeChildren (parent) {
+        while (parent.lastChild) {
+            parent.removeChild(parent.lastChild);
+        }
+    }
+
+    function autocomplet(){
+        var sel=document.getElementById("nomiutente");
+        var ricerca;
+        removeChildren(sel);
+        ricerca=document.getElementById("search").value;
+        if(ricerca.length!=0){
+            for (i=0;i<usernameDatabase.length;i++){
+                username=usernameDatabase[i].username;
+                if(username.startsWith(ricerca)){
+                    var opt=document.createElement("option");
+                    opt.innerText=username;
+                    opt.setAttribute("value",username);
+                    sel.appendChild(opt);
+                }
+            }
+        }
+        else{
+            return;
+        }
+    }
     
 </script>
 
@@ -308,8 +382,11 @@ var info;
 </div>
 <div class="search-bar">
 <form>
-<input type="text" name="search" placeholder="Search...">
-<button type="submit"><i class="fas fa-search"></i></button>
+<input type="text" list="nomiutente" name="search" id="search" autocomplete="off" oninput="autocomplet()" placeholder="Cerca">
+<div id="qui">
+
+</div>
+<button type="button" onclick="cerca()"><i class="fas fa-search"></i></button>
 </form>
 </div>
 <nav>
@@ -486,7 +563,10 @@ Notification
 <p style="display:none" id="piede"></p>
 <p style="display:none" id="maxserie"></p>
 <p style="display:none" id="currentserie"></p>
-<p style="display:none" id="residenza"></p>
+<p style="display:none" id="residenza"></p><br>
+<div id="ruoli">
+
+</div>
 </div>
 </div>
 <ul class="user-fw-status">

@@ -40,54 +40,99 @@ var info;
           xhr.onreadystatechange = function () {
             if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                 info=JSON.parse(xhr.responseText);
-                document.getElementById("username").innerHTML=info.username;
-                document.getElementById("nomeinalto").innerHTML="<?php echo $_SESSION["username"]; ?>";
-                let residenza=info.nome_residenza.split(",");
-                let citta=residenza[0];
-                let via=residenza[1];
-                if(info.tipo=="calciatore"){
-                    document.getElementById("immagine").src="player_image.svg";
-                    document.getElementById("biografia").style.display="block";
-                    document.getElementById("nome").style.display="block";
-                    document.getElementById("data_nascita").style.display="block";
-                    document.getElementById("currentserie").style.display="block";
-                    document.getElementById("maxserie").style.display="block";
-                    document.getElementById("residenza").style.display="block";
-                    document.getElementById("piede").style.display="block";
-                    document.getElementById("biografia").innerHTML="<span style='font-weight: bold;'>Biografia</span>: "+info.biografia;
-                    document.getElementById("nome").innerHTML="<span style='font-weight: bold;'>Nome</span>: "+info.nome+" "+info.cognome;
-                    document.getElementById("data_nascita").innerHTML="<span style='font-weight: bold;'>Data di nascita</span>: "+info.data_nascita;
-                    document.getElementById("currentserie").innerHTML="<span style='font-weight: bold;'>Serie corrente</span>: "+info.current_serie;
-                    document.getElementById("maxserie").innerHTML="<span style='font-weight: bold;'>Massima serie raggiunta</span>: "+info.max_serie;
-                    document.getElementById("piede").innerHTML="<span style='font-weight: bold;'>Piede</span>: "+info.piede;
-                    document.getElementById("residenza").innerHTML="<span style='font-weight: bold;'>Città</span>: "+citta+"<span style='font-weight: bold;'> Via</span>: "+via;
-                    document.getElementById("top_profile_title").innerHTML="Più popolari";
-                    
-                }  
+                if(info.tipo!="<?php echo $_SESSION["type"]; ?>"){
+                    if(info.length==0){
+                        window.location.href="index.php";
+                    }
+                    else{
+                        document.getElementById("username").innerHTML=info.username;
+                        document.getElementById("nomeinalto").innerHTML="<?php echo $_SESSION["username"]; ?>";
+                        let residenza=info.nome_residenza.split(",");
+                        let citta=residenza[0];
+                        let via=residenza[1];
+                        var div=document.getElementById("qui");
+                        var datalist=document.createElement("datalist");
+                        datalist.setAttribute("id","nomiutente");
+                        div.appendChild(datalist);
+                        if(info.tipo=="calciatore"){
+                            document.getElementById("immagine").src="player_image.svg";
+                            document.getElementById("biografia").style.display="block";
+                            document.getElementById("nome").style.display="block";
+                            document.getElementById("data_nascita").style.display="block";
+                            document.getElementById("currentserie").style.display="block";
+                            document.getElementById("maxserie").style.display="block";
+                            document.getElementById("residenza").style.display="block";
+                            document.getElementById("piede").style.display="block";
+                            document.getElementById("biografia").innerHTML="<span style='font-weight: bold;'>Biografia</span>: "+info.biografia;
+                            document.getElementById("nome").innerHTML="<span style='font-weight: bold;'>Nome</span>: "+info.nome+" "+info.cognome;
+                            document.getElementById("data_nascita").innerHTML="<span style='font-weight: bold;'>Data di nascita</span>: "+info.data_nascita;
+                            document.getElementById("currentserie").innerHTML="<span style='font-weight: bold;'>Serie corrente</span>: "+info.current_serie;
+                            document.getElementById("maxserie").innerHTML="<span style='font-weight: bold;'>Massima serie raggiunta</span>: "+info.max_serie;
+                            document.getElementById("piede").innerHTML="<span style='font-weight: bold;'>Piede</span>: "+info.piede;
+                            document.getElementById("residenza").innerHTML="<span style='font-weight: bold;'>Città</span>: "+citta+"<span style='font-weight: bold;'> Via</span>: "+via;
+                            document.getElementById("top_profile_title").innerHTML="Più popolari";
+                            
+                        }  
+                        else{
+                            document.getElementById("immagine").src="team_image.svg";
+                            document.getElementById("nome").style.display="block";
+                            document.getElementById("currentserie").style.display="block";
+                            document.getElementById("residenza").style.display="block";
+                            document.getElementById("nome").innerHTML="<span style='font-weight: bold;'>Nome società</span>: "+info.nome;
+                            document.getElementById("currentserie").innerHTML="<span style='font-weight: bold;'>Serie corrente</span>: "+info.current_serie;
+                            document.getElementById("residenza").innerHTML="<span style='font-weight: bold;'>Città</span>: "+citta+"<span style='font-weight: bold;'> Via</span>: "+via;
+                            document.getElementById("top_profile_title").innerHTML="Più popolari";
+                        }
+                        if(info.vecchio=="calciatore"){
+                            document.getElementById("profilivicini").innerHTML="Società nelle vicinanze";
+                        }
+                        else{
+                            document.getElementById("profilivicini").innerHTML="Calciatori nelle vicinanze";
+                        }
+                        addRuoli();
+                        getNearest();
+                        getFollower();
+                        checkFollower();
+                        getTopProfile();
+                        getPost();
+                        prendiUsername();
+                    }
+                }
                 else{
-                    document.getElementById("immagine").src="team_image.svg";
-                    document.getElementById("nome").style.display="block";
-                    document.getElementById("currentserie").style.display="block";
-                    document.getElementById("residenza").style.display="block";
-                    document.getElementById("nome").innerHTML="<span style='font-weight: bold;'>Nome società</span>: "+info.nome;
-                    document.getElementById("currentserie").innerHTML="<span style='font-weight: bold;'>Serie corrente</span>: "+info.current_serie;
-                    document.getElementById("residenza").innerHTML="<span style='font-weight: bold;'>Città</span>: "+citta+"<span style='font-weight: bold;'> Via</span>: "+via;
-                    document.getElementById("top_profile_title").innerHTML="Più popolari";
+                    window.location.href="index.php";
                 }
-                if(info.vecchio=="calciatore"){
-                    document.getElementById("profilivicini").innerHTML="Società nelle vicinanze";
-                }
-                else{
-                    document.getElementById("profilivicini").innerHTML="Calciatori nelle vicinanze";
-                }
-                getNearest();
-                getFollower();
-                checkFollower();
-                getTopProfile();
-                getPost();
               }
           }
           xhr.send();
+    }
+
+    function addRuoli(){
+        var xhr = new XMLHttpRequest();
+        var url="prendiRuoliUser.php";
+        url+="?username="+"<?php echo $_GET["username"]; ?>";
+        xhr.open("GET", url, true);
+        xhr.onreadystatechange = function () {
+            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                res=JSON.parse(xhr.responseText);
+                let div=document.getElementById("ruoli");
+                var int=document.createElement("p");
+                int.setAttribute("id", "nruoli"+i);
+                int.setAttribute("style", "font-weight: bold");
+                div.appendChild(int);
+                document.getElementById("nruoli"+i).innerHTML="Ruoli";
+                for(var i=0; i<res.length; i++){
+                    var p=document.createElement("p");
+                    p.setAttribute("id", "ruolo"+i);
+                    div.appendChild(p);
+                    document.getElementById("ruolo"+i).innerHTML=res[i].nome;
+                }
+            }
+        }
+        xhr.send();
+    }
+
+    function cerca(){
+        window.location.href="user.php?username="+document.getElementById("search").value;
     }
 
     function checkFollower(){
@@ -348,6 +393,50 @@ var info;
         }
         xhr.send();
     }
+
+    var usernameDatabase;
+    function prendiUsername(){
+        var xhr = new XMLHttpRequest();
+        var url="prendiUsernameDatabase.php";
+        xhr.open("GET", url, true);
+        xhr.onreadystatechange = function () {
+            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                usernameDatabase=JSON.parse(xhr.responseText);
+            }
+        }
+        xhr.send();
+    }
+
+    function removeChildren (parent) {
+        while (parent.lastChild) {
+            parent.removeChild(parent.lastChild);
+        }
+    }
+
+    function autocomplet(){
+        var sel=document.getElementById("nomiutente");
+        var ricerca;
+        removeChildren(sel);
+        ricerca=document.getElementById("search").value;
+        if(ricerca.length!=0){
+            for (i=0;i<usernameDatabase.length;i++){
+                username=usernameDatabase[i].username;
+                if(username.startsWith(ricerca)){
+                    var opt=document.createElement("option");
+                    opt.innerText=username;
+                    opt.setAttribute("value",username);
+                    sel.appendChild(opt);
+                }
+            }
+        }
+        else{
+            return;
+        }
+    }
+
+    function scrivi(){
+        window.location.href="message.php?user="+"<?php echo $_GET["username"]; ?>";
+    }
     
 </script>
 
@@ -362,8 +451,11 @@ var info;
 </div>
 <div class="search-bar">
 <form>
-<input type="text" name="search" placeholder="Search...">
-<button type="submit"><i class="fas fa-search"></i></button>
+<input type="text" list="nomiutente" name="search" id="search" autocomplete="off" oninput="autocomplet()" placeholder="Cerca">
+<div id="qui">
+
+</div>
+<button type="button" onclick="cerca()"><i class="fas fa-search"></i></button>
 </form>
 </div>
 <nav>
@@ -541,11 +633,15 @@ Notification
 <p style="display:none" id="piede"></p>
 <p style="display:none" id="maxserie"></p>
 <p style="display:none" id="currentserie"></p>
-<p style="display:none" id="residenza"></p>
+<p style="display:none" id="residenza"></p><br>
+
+<div id="ruoli">
+
+</div>
 
 <br>
 <button style="float: center;color: #fff;background-color: #e44d3a;height: 40px;padding: 0 10px;text-align: center;font-size: 14px;border: 0;margin-left: 10px;cursor: pointer;font-weight: 600;" onclick="follow()" id="follow"></button>
-
+<button style="float: center;color: #fff;background-color: #53d690;height: 40px;padding: 0 10px;text-align: center;font-size: 14px;border: 0;margin-left: 10px;cursor: pointer;font-weight: 600;" onclick="scrivi()" id="contatta">CONTATTA</button>
 </div>
 </div>
 <ul class="user-fw-status">
