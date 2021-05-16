@@ -86,6 +86,7 @@ var info;
                 getTopProfile();
                 getPost();
                 prendiUsername();
+                transformDate();
               }
           }
           xhr.send();
@@ -370,6 +371,41 @@ var info;
         }
     }
 
+    function transformDate(){
+        var date=localStorage.getItem("data");
+        if(date!=null){
+            var preso=new Date(date);
+            var month = preso.getMonth();
+            month+=1;
+            var day = preso.getDate();
+            var year = preso.getFullYear();
+            var hours = preso.getHours();
+            var minutes = preso.getMinutes();
+            var seconds = preso.getSeconds();
+            var risultato=year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
+        }
+        else{
+            var preso=new Date();
+            var month = preso.getMonth();
+            month+=1;
+            var day = preso.getDate();
+            var year = preso.getFullYear();
+            var hours = preso.getHours();
+            var minutes = preso.getMinutes();
+            var seconds = preso.getSeconds();
+            var risultato=year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
+        }
+        var xhr = new XMLHttpRequest();
+        var url="setData.php";
+        url+="?data="+risultato;
+        xhr.open("GET", url, true);
+        xhr.onreadystatechange = function () {
+            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+            }
+        }
+        xhr.send();
+    }
+
     var notifiche=0;
     function getNotification(){
     var xhr = new XMLHttpRequest();
@@ -422,6 +458,8 @@ var info;
     setInterval(getNotification, 2000);
 
     function getChat(username){
+        var todayTime = new Date();
+        localStorage.setItem("data", todayTime);
         <?php
             session_start();
             $data=date("Y-m-d H:i:s");
@@ -429,6 +467,11 @@ var info;
         ?>
         window.location.href="message.php?user="+username;
     }
+
+    window.addEventListener('beforeunload', function () {
+        var todayTime = new Date();
+        localStorage.setItem("data", todayTime);
+    });
     
 </script>
 
