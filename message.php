@@ -48,6 +48,7 @@ var info;
           xhr.onreadystatechange = function () {
             if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                 info=JSON.parse(xhr.responseText);
+                document.getElementById("notificatitolo").innerHTML='Notifiche';
                 if(info.tipo!="<?php echo $_SESSION["type"]; ?>"){
                     if(info.length==0){
                         window.location.href="index.php";
@@ -167,6 +168,15 @@ var info;
         window.location.href="user.php?username="+username;
     }
 
+    function getChat(username){
+        <?php
+            session_start();
+            $data=date("Y-m-d H:i:s");
+            $_SESSION["data"]=$data;
+        ?>
+        window.location.href="message.php?user="+username;
+    }
+
     var user;
     function getNearest(){
         var xhr = new XMLHttpRequest();
@@ -272,6 +282,7 @@ var info;
     }
 
     setInterval(getMessage, 2000);
+    setInterval(getNotification, 2000);
 
     let numeromessaggi=0;
     function getMessage(){
@@ -282,6 +293,7 @@ var info;
         xhr.onreadystatechange = function () {
             if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                 messaggi=JSON.parse(xhr.responseText);
+                console.log(messaggi);
                 if(messaggi.lenght!=0){
                 
                     var div2;
@@ -297,7 +309,8 @@ var info;
                     for (i=0;i<messaggi.length;i++){
                         let data1=Date.parse(messaggi[i].data);
                         if(i>=numeromessaggi){
-                            if(messaggi[i].mittente=='<?php echo $_SESSION["username"]; ?>'){
+                            var x='<?php echo $_SESSION["username"]; ?>';
+                            if(messaggi[i].mittente.toLowerCase()==x.toLowerCase()){
                                 var div3 = document.createElement("div");
                                 div3.setAttribute("id","chat"+i);
                                 div3.setAttribute("class","chat-msg");
@@ -312,6 +325,8 @@ var info;
                                 div3.appendChild(data);
                                 document.getElementById("time"+i).innerHTML=messaggi[i].data;
                                 document.getElementById("elemen").scrollTop=100000;
+
+                                
                             }
                             else{
                                 var div3 = document.createElement("div");
@@ -328,6 +343,8 @@ var info;
                                 data.setAttribute("id","time"+i);
                                 div3.appendChild(data);
                                 document.getElementById("time"+i).innerHTML=messaggi[i].data;
+
+                                
                             }
                         }
                     }
@@ -340,6 +357,60 @@ var info;
         }
         xhr.send();
     }
+
+    var notifiche=0;
+    function getNotification(){
+    var xhr = new XMLHttpRequest();
+        var url="getNotification.php";
+        xhr.open("GET", url, true);
+        xhr.onreadystatechange = function () {
+            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                mes=JSON.parse(xhr.responseText);
+                var x='<?php echo $_GET["user"]; ?>';
+                if(mes.length>notifiche){
+                    for (i=0;i<mes.length;i++){
+                        if(mes[i].mittente.toLowerCase()!=x.toLowerCase()){
+                            document.getElementById("notificatitolo").innerHTML='Notifiche <i class="fas fa-exclamation"></i>';
+                            var div4= document.createElement("div");
+                            div4.setAttribute("id","notifica"+i);
+                            div4.setAttribute("class","notfication-details");
+                            var barranotifiche=document.getElementById("notifiche");
+                            barranotifiche.appendChild(div4);
+                            var div5= document.createElement("div");
+                            div5.setAttribute("id","notifica"+i);
+                            div5.setAttribute("class","notification-info");
+                            div4.appendChild(div5);
+                            var posto = document.createElement("h3");
+                            div5.appendChild(posto);
+                            var username = document.createElement("a");
+                            username.setAttribute("id","userna"+i);
+                            username.addEventListener("click", function(event){
+                                getChat(event.target.innerText);
+                            });
+                            username.setAttribute("style","cursor:pointer");
+                            posto.appendChild(username);
+                            document.getElementById("userna"+i).innerHTML=mes[i].mittente;
+                            var testom = document.createElement("p");
+                            testom.setAttribute("id","tes"+i);
+                            div5.appendChild(testom);
+                            document.getElementById("tes"+i).innerHTML=mes[i].messaggio;
+                            var da = document.createElement("span");
+                            da.setAttribute("id","da"+i);
+                            div5.appendChild(da);
+                            document.getElementById("da"+i).innerHTML=mes[i].data;
+                        }
+                    }
+                    notifiche=mes.length;
+                }
+            }
+            else{
+                document.getElementById("notificatitolo").innerHTML='Notifiche';
+            }
+        }
+        xhr.send();
+    }
+
+    
 
     var usernameDatabase;
     function prendiUsername(){
@@ -466,124 +537,11 @@ Miei post
 </a>
 </li>
 <li>
-<a href="projects.html" title="">
-<span><img src="" alt=""></span>
-Projects
-</a>
-</li>
-<li>
-<a href="profiles.html" title="">
-<span><img src="" alt=""></span>
-Profiles
-</a>
-<ul>
-<li><a href="user-profile.html" title="">User Profile</a></li>
-<li><a href="my-profile-feed.html" title="">my-profile-feed</a></li>
-</ul>
-</li>
-<li>
-<a href="jobs.html" title="">
-<span><img src="" alt=""></span>
-Jobs
-</a>
-</li>
-<li>
-<a href="#" title="" class="not-box-openm">
-<span><img src="" alt=""></span>
-Messages
+<a href="#" title="" class="not-box-openm" id="notificatitolo">
 </a>
 <div class="notification-box msg" id="message">
-<div class="nt-title">
-<h4>Setting</h4>
-<a href="#" title="">Clear all</a>
-</div>
-<div class="nott-list">
-<div class="notfication-details">
-<div class="noty-user-img">
-<img src="" alt="">
-</div>
-<div class="notification-info">
-<h3><a href="messages.html" title="">Jassica William</a> </h3>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do.</p>
-<span>2 min ago</span>
-</div>
-</div>
-<div class="notfication-details">
-<div class="noty-user-img">
-<img src="" alt="">
-</div>
-<div class="notification-info">
-<h3><a href="messages.html" title="">Jassica William</a></h3>
-<p>Lorem ipsum dolor sit amet.</p>
-<span>2 min ago</span>
-</div>
-</div>
-<div class="notfication-details">
-<div class="noty-user-img">
-<img src="" alt="">
-</div>
-<div class="notification-info">
-<h3><a href="messages.html" title="">Jassica William</a></h3>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempo incididunt ut labore et dolore magna aliqua.</p>
-<span>2 min ago</span>
-</div>
-</div>
-<div class="view-all-nots">
-<a href="messages.html" title="">View All Messsages</a>
-</div>
-</div>
-</div>
-</li>
-<li>
-<a href="#" title="" class="not-box-open">
-<span><img src="" alt=""></span>
-Notification
-</a>
-<div class="notification-box noti" id="notification">
-<div class="nt-title">
-<h4>Setting</h4>
-<a href="#" title="">Clear all</a>
-</div>
-<div class="nott-list">
-<div class="notfication-details">
-<div class="noty-user-img">
-<img src="" alt="">
-</div>
-<div class="notification-info">
-<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
-<span>2 min ago</span>
-</div>
-</div>
-<div class="notfication-details">
-<div class="noty-user-img">
-<img src="" alt="">
-</div>
-<div class="notification-info">
-<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
-<span>2 min ago</span>
-</div>
-</div>
-<div class="notfication-details">
-<div class="noty-user-img">
-<img src="" alt="">
-</div>
-<div class="notification-info">
-<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
-<span>2 min ago</span>
-</div>
-</div>
-<div class="notfication-details">
-<div class="noty-user-img">
-<img src="" alt="">
-</div>
-<div class="notification-info">
-<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
-<span>2 min ago</span>
-</div>
-</div>
-<div class="view-all-nots">
-<a href="#" title="">View All Notification</a>
-</div>
+<div class="nott-list" id="notifiche">
+
 </div>
 </div>
 </li>

@@ -12,6 +12,8 @@ try{
     echo $e->getMessage();
 }
 
+$data=date("Y-m-d H:i:s");
+$_SESSION["data"]=$data;
 $username=$_SESSION["username"];
 
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
