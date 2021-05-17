@@ -12,7 +12,7 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<title>Sito</title>
+<title>Messaggi</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="" />
 <meta name="keywords" content="" />
@@ -51,7 +51,7 @@ var info;
                 document.getElementById("notificatitolo").innerHTML='Notifiche';
                 if(info.tipo!="<?php echo $_SESSION["type"]; ?>"){
                     if(info.length==0){
-                        window.location.href="index.php";
+                        window.location.href="homepage.php";
                     }
                     else{
                         document.getElementById("username").innerHTML=info.username;
@@ -111,7 +111,7 @@ var info;
                     }
                 }
                 else{
-                    window.location.href="index.php";
+                    window.location.href="homepage.php";
                 }
             }
         }
@@ -512,7 +512,7 @@ var info;
 <div class="container">
 <div class="header-data">
 <div class="logo">
-<a href="index.html" title=""><img src="" alt=""></a>
+<a href="homepage.php" title=""><img src="" alt=""></a>
 </div>
 <div class="search-bar">
 <form>
@@ -526,7 +526,7 @@ var info;
 <nav>
 <ul>
 <li>
-<a href="index.php" title="">
+<a href="homepage.php" title="">
 <span><img src="" alt=""></span>
 Home
 </a>

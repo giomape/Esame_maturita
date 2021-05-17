@@ -12,7 +12,7 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<title>Sito</title>
+<title>I miei post</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="" />
 <meta name="keywords" content="" />
@@ -466,7 +466,7 @@ var info;
 <div class="container">
 <div class="header-data">
 <div class="logo">
-<a href="index.html" title=""><img src="" alt=""></a>
+<a href="homepage.php" title=""><img src="" alt=""></a>
 </div>
 <div class="search-bar">
 <form>
@@ -480,7 +480,7 @@ var info;
 <nav>
 <ul>
 <li>
-<a href="index.php" title="">
+<a href="homepage.php" title="">
 <span><img src="" alt=""></span>
 Home
 </a>

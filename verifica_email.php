@@ -43,7 +43,7 @@
             xhr.open("GET", url, true);
             xhr.onreadystatechange = function () {
               if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                window.location.href="index.php";
+                window.location.href="homepage.php";
               }
               else if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 401) {
                 sendEmail();
