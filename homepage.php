@@ -12,7 +12,7 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<title><?php echo $_GET["username"]; ?></title>
+<title>Homepage</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="" />
 <meta name="keywords" content="" />
@@ -34,74 +34,59 @@ var info;
 
     function prendiDati(){
         var xhr = new XMLHttpRequest();
-          var url="prendiDatiUser.php";
-          url+="?username="+"<?php echo $_GET["username"]; ?>";
+          var url="prendiDati.php";
           xhr.open("GET", url, true);
           xhr.onreadystatechange = function () {
             if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                 info=JSON.parse(xhr.responseText);
                 document.getElementById("notificatitolo").innerHTML='Notifiche';
-                if(info.tipo!="<?php echo $_SESSION["type"]; ?>"){
-                    if(info.length==0){
-                        window.location.href="homepage.php";
-                    }
-                    else{
-                        document.getElementById("username").innerHTML=info.username;
-                        document.getElementById("nomeinalto").innerHTML="<?php echo $_SESSION["username"]; ?>";
-                        let residenza=info.nome_residenza.split(",");
-                        let citta=residenza[0];
-                        let via=residenza[1];
-                        var div=document.getElementById("qui");
-                        var datalist=document.createElement("datalist");
-                        datalist.setAttribute("id","nomiutente");
-                        div.appendChild(datalist);
-                        if(info.tipo=="calciatore"){
-                            document.getElementById("immagine").src="player_image.svg";
-                            document.getElementById("biografia").style.display="block";
-                            document.getElementById("nome").style.display="block";
-                            document.getElementById("data_nascita").style.display="block";
-                            document.getElementById("currentserie").style.display="block";
-                            document.getElementById("maxserie").style.display="block";
-                            document.getElementById("residenza").style.display="block";
-                            document.getElementById("piede").style.display="block";
-                            document.getElementById("biografia").innerHTML="<span style='font-weight: bold;'>Biografia</span>: "+info.biografia;
-                            document.getElementById("nome").innerHTML="<span style='font-weight: bold;'>Nome</span>: "+info.nome+" "+info.cognome;
-                            document.getElementById("data_nascita").innerHTML="<span style='font-weight: bold;'>Data di nascita</span>: "+info.data_nascita;
-                            document.getElementById("currentserie").innerHTML="<span style='font-weight: bold;'>Serie corrente</span>: "+info.current_serie;
-                            document.getElementById("maxserie").innerHTML="<span style='font-weight: bold;'>Massima serie raggiunta</span>: "+info.max_serie;
-                            document.getElementById("piede").innerHTML="<span style='font-weight: bold;'>Piede</span>: "+info.piede;
-                            document.getElementById("residenza").innerHTML="<span style='font-weight: bold;'>Città</span>: "+citta+"<span style='font-weight: bold;'> Via</span>: "+via;
-                            document.getElementById("top_profile_title").innerHTML="Più popolari";
-                            
-                        }  
-                        else{
-                            document.getElementById("immagine").src="team_image.svg";
-                            document.getElementById("nome").style.display="block";
-                            document.getElementById("currentserie").style.display="block";
-                            document.getElementById("residenza").style.display="block";
-                            document.getElementById("nome").innerHTML="<span style='font-weight: bold;'>Nome società</span>: "+info.nome;
-                            document.getElementById("currentserie").innerHTML="<span style='font-weight: bold;'>Serie corrente</span>: "+info.current_serie;
-                            document.getElementById("residenza").innerHTML="<span style='font-weight: bold;'>Città</span>: "+citta+"<span style='font-weight: bold;'> Via</span>: "+via;
-                            document.getElementById("top_profile_title").innerHTML="Più popolari";
-                        }
-                        if(info.vecchio=="calciatore"){
-                            document.getElementById("profilivicini").innerHTML="Società nelle vicinanze";
-                        }
-                        else{
-                            document.getElementById("profilivicini").innerHTML="Calciatori nelle vicinanze";
-                        }
-                        addRuoli();
-                        getNearest();
-                        getFollower();
-                        checkFollower();
-                        getTopProfile();
-                        getPost();
-                        prendiUsername();
-                    }
+                document.getElementById("username").innerHTML=info.username;
+                document.getElementById("nomeinalto").innerHTML=info.username;
+                let residenza=info.nome_residenza.split(",");
+                let citta=residenza[0];
+                let via=residenza[1];
+                var div=document.getElementById("qui");
+                var datalist=document.createElement("datalist");
+                datalist.setAttribute("id","nomiutente");
+                div.appendChild(datalist);
+                if(info.tipo=="calciatore"){
+                    document.getElementById("immagine").src="player_image.svg";
+                    document.getElementById("biografia").style.display="block";
+                    document.getElementById("nome").style.display="block";
+                    document.getElementById("data_nascita").style.display="block";
+                    document.getElementById("currentserie").style.display="block";
+                    document.getElementById("maxserie").style.display="block";
+                    document.getElementById("residenza").style.display="block";
+                    document.getElementById("piede").style.display="block";
+
+                    document.getElementById("biografia").innerHTML="<span style='font-weight: bold;'>Biografia</span>: "+info.biografia;
+                    document.getElementById("nome").innerHTML="<span style='font-weight: bold;'>Nome</span>: "+info.nome+" "+info.cognome;
+                    document.getElementById("data_nascita").innerHTML="<span style='font-weight: bold;'>Data di nascita</span>: "+info.data_nascita;
+                    document.getElementById("currentserie").innerHTML="<span style='font-weight: bold;'>Serie corrente</span>: "+info.current_serie;
+                    document.getElementById("maxserie").innerHTML="<span style='font-weight: bold;'>Massima serie raggiunta</span>: "+info.max_serie;
+                    document.getElementById("piede").innerHTML="<span style='font-weight: bold;'>Piede</span>: "+info.piede;
+                    document.getElementById("residenza").innerHTML="<span style='font-weight: bold;'>Città</span>: "+citta+"<span style='font-weight: bold;'> Via</span>: "+via;
+                    document.getElementById("profilivicini").innerHTML="Società nelle vicinanze";
+                    document.getElementById("top_profile_title").innerHTML="Più popolari";
                 }
                 else{
-                    window.location.href="homepage.php";
+                    document.getElementById("immagine").src="team_image.svg";
+                    document.getElementById("nome").style.display="block";
+                    document.getElementById("currentserie").style.display="block";
+                    document.getElementById("residenza").style.display="block";
+                    document.getElementById("profilivicini").innerHTML="Calciatori nelle vicinanze";
+                    document.getElementById("nome").innerHTML="<span style='font-weight: bold;'>Nome società</span>: "+info.nome;
+                    document.getElementById("currentserie").innerHTML="<span style='font-weight: bold;'>Serie corrente</span>: "+info.current_serie;
+                    document.getElementById("residenza").innerHTML="<span style='font-weight: bold;'>Città</span>: "+citta+"<span style='font-weight: bold;'> Via</span>: "+via;
+                    document.getElementById("top_profile_title").innerHTML="Più popolari";
                 }
+                addRuoli();
+                getNearest();
+                getFollower();
+                getTopProfile();
+                getPost();
+                prendiUsername();
+                transformDate();
               }
           }
           xhr.send();
@@ -109,8 +94,7 @@ var info;
 
     function addRuoli(){
         var xhr = new XMLHttpRequest();
-        var url="prendiRuoliUser.php";
-        url+="?username="+"<?php echo $_GET["username"]; ?>";
+        var url="prendiRuoli.php";
         xhr.open("GET", url, true);
         xhr.onreadystatechange = function () {
             if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
@@ -136,55 +120,23 @@ var info;
         window.location.href="user.php?username="+document.getElementById("search").value;
     }
 
-    function checkFollower(){
-        var xhr = new XMLHttpRequest();
-          var url="checkFollow.php";
-          url+="?username="+"<?php echo $_GET["username"]; ?>";
-          xhr.open("GET", url, true);
-          xhr.onreadystatechange = function () {
-            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                document.getElementById("follow").innerHTML="SEGUITO";
-                document.getElementById("follow").setAttribute("onClick", "unfollow()" );
-            }
-            else if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 404) {
-                document.getElementById("follow").innerHTML="SEGUI";
-                document.getElementById("follow").setAttribute("onClick", "follow()" );
-            }
-          }
-          xhr.send();
-    }
-
-    function getFollower(){
-        var xhr = new XMLHttpRequest();
-          var url="getFollower.php";
-          url+="?username="+"<?php echo $_GET["username"]; ?>";
-          xhr.open("GET", url, true);
-          xhr.onreadystatechange = function () {
-            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                res=JSON.parse(xhr.responseText);
-                document.getElementById("seguaci").innerHTML=res["follower"];
-                document.getElementById("seguiti").innerHTML=res["following"];
-            }
-          }
-          xhr.send();
-    }
-
     function getUser(username){
         window.location.href="user.php?username="+username;
     }
 
+    var user;
     function getNearest(){
         var xhr = new XMLHttpRequest();
           var url="getNearestPlace.php";
-          url+="?lat="+"<?php echo $_SESSION["lat"]; ?>";
-          url+="&long="+"<?php echo $_SESSION["long"]; ?>";
+          url+="?lat="+info.latitudine;
+          url+="&long="+info.longitudine;
           xhr.open("GET", url, true);
           xhr.onreadystatechange = function () {
             if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                 res=JSON.parse(xhr.responseText);
+                user=res;
                 let div1=document.getElementById("vicinanza");
                 for (i=0;i<res.length;i++){
-                    
                     var div2 = document.createElement("div");
                     div2.setAttribute("id","elemento"+i);
                     div2.setAttribute("class","job-info");
@@ -278,40 +230,24 @@ var info;
         xhr.send();
     }
 
-    function follow(){
+    function getFollower(){
         var xhr = new XMLHttpRequest();
-          var url="follow.php";
-          url+="?seguito="+"<?php echo $_GET["username"]; ?>";
+          var url="getFollower.php";
+          url+="?username="+"<?php echo $_SESSION["username"]; ?>";
           xhr.open("GET", url, true);
           xhr.onreadystatechange = function () {
             if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                document.getElementById("follow").innerHTML="SEGUITO";
-                document.getElementById("follow").setAttribute("onClick","unfollow();");
+                res=JSON.parse(xhr.responseText);
+                document.getElementById("seguaci").innerHTML=res["follower"];
+                document.getElementById("seguiti").innerHTML=res["following"];
             }
-        }
-        xhr.send();
-        getFollower();
-    }
-
-    function unfollow(){
-        var xhr = new XMLHttpRequest();
-          var url="unfollow.php";
-          url+="?seguito="+"<?php echo $_GET["username"]; ?>";
-          xhr.open("GET", url, true);
-          xhr.onreadystatechange = function () {
-            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                document.getElementById("follow").innerHTML="SEGUI";
-                document.getElementById("follow").setAttribute("onClick","follow();");
-            }
-        }
-        xhr.send();
-        getFollower();
+          }
+          xhr.send();
     }
 
     function getPost(){
         var xhr = new XMLHttpRequest();
-        var url="getPostUser.php";
-        url+="?username="+"<?php echo $_GET["username"]; ?>";
+        var url="getPostHome.php";
         xhr.open("GET", url, true);
         xhr.onreadystatechange = function () {
             if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
@@ -330,11 +266,11 @@ var info;
                     var titolo = document.createElement("h3");
                     titolo.setAttribute("id","titolo"+i);
                     div6.appendChild(titolo);
-                    document.getElementById("titolo"+i).innerHTML="Torna più tardi";
+                    document.getElementById("titolo"+i).innerHTML="Non segui ancora nessuno o chi segui non ha ancora postato nulla";
                     var descrizione = document.createElement("p");
                     descrizione.setAttribute("id","descrizione"+i);
                     div6.appendChild(descrizione);
-                    document.getElementById("descrizione"+i).innerHTML="<?php echo $_GET["username"]; ?> non ha ancora postato nulla :(";
+                    document.getElementById("descrizione"+i).innerHTML="Cerca un profilo o clicca sui suggeriti per iniziare a seguire qualcuno";
                 }
                 else{
                     for (i=0;i<res.length;i++){
@@ -435,8 +371,39 @@ var info;
         }
     }
 
-    function scrivi(){
-        window.location.href="message.php?user="+"<?php echo $_GET["username"]; ?>";
+    function transformDate(){
+        var date=localStorage.getItem("data");
+        if(date!=null){
+            var preso=new Date(date);
+            var month = preso.getMonth();
+            month+=1;
+            var day = preso.getDate();
+            var year = preso.getFullYear();
+            var hours = preso.getHours();
+            var minutes = preso.getMinutes();
+            var seconds = preso.getSeconds();
+            var risultato=year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
+        }
+        else{
+            var preso=new Date();
+            var month = preso.getMonth();
+            month+=1;
+            var day = preso.getDate();
+            var year = preso.getFullYear();
+            var hours = preso.getHours();
+            var minutes = preso.getMinutes();
+            var seconds = preso.getSeconds();
+            var risultato=year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
+        }
+        var xhr = new XMLHttpRequest();
+        var url="setData.php";
+        url+="?data="+risultato;
+        xhr.open("GET", url, true);
+        xhr.onreadystatechange = function () {
+            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+            }
+        }
+        xhr.send();
     }
 
     var notifiche=0;
@@ -491,6 +458,8 @@ var info;
     setInterval(getNotification, 2000);
 
     function getChat(username){
+        var todayTime = new Date();
+        localStorage.setItem("data", todayTime);
         <?php
             session_start();
             $data=date("Y-m-d H:i:s");
@@ -498,6 +467,11 @@ var info;
         ?>
         window.location.href="message.php?user="+username;
     }
+
+    window.addEventListener('beforeunload', function () {
+        var todayTime = new Date();
+        localStorage.setItem("data", todayTime);
+    });
     
 </script>
 
@@ -582,14 +556,9 @@ Miei post
 <p style="display:none" id="maxserie"></p>
 <p style="display:none" id="currentserie"></p>
 <p style="display:none" id="residenza"></p><br>
-
 <div id="ruoli">
 
 </div>
-
-<br>
-<button style="float: center;color: #fff;background-color: #e44d3a;height: 40px;padding: 0 10px;text-align: center;font-size: 14px;border: 0;margin-left: 10px;cursor: pointer;font-weight: 600;" onclick="follow()" id="follow"></button>
-<button style="float: center;color: #fff;background-color: #53d690;height: 40px;padding: 0 10px;text-align: center;font-size: 14px;border: 0;margin-left: 10px;cursor: pointer;font-weight: 600;" onclick="scrivi()" id="contatta">CONTATTA</button>
 </div>
 </div>
 <ul class="user-fw-status">
@@ -630,6 +599,7 @@ Miei post
 </div>
 <div class="posts-section" id="sezionepost">
 
+
 </div>
 </div>
 </div>
@@ -651,7 +621,6 @@ Miei post
 </div>
 </div>
 </main>
-
 <div class="post-popup job_post">
 <div class="post-project">
 <h3>Crea un post</h3>
