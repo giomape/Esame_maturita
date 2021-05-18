@@ -75,7 +75,7 @@
         <form name="login">
           <hr>
           <div style="text-align: center;">
-            <i style="size:7x" class="fas fa-user-circle fa-5x"></i>
+            <img src="logo.png" style="width:170px; height:170px" alt="Logo">
           </div>
           <p id="required" style="color: red; display: none;">Alcuni campi non sono stati inseriti</p><br>
           <label id="icon" for="username"><i class="fas fa-address-card"></i></label>

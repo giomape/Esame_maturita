@@ -502,6 +502,11 @@ var info;
         }
         xhr.send(params);
     }
+
+    window.addEventListener('beforeunload', function () {
+        var todayTime = new Date();
+        localStorage.setItem("data", todayTime);
+    });
     
 </script>
 
@@ -511,9 +516,6 @@ var info;
 <header>
 <div class="container">
 <div class="header-data">
-<div class="logo">
-<a href="homepage.php" title=""><img src="" alt=""></a>
-</div>
 <div class="search-bar">
 <form>
 <input type="text" list="nomiutente" name="search" id="search" autocomplete="off" oninput="autocomplet()" placeholder="Cerca">
@@ -618,13 +620,17 @@ Miei post
 <div class="tags-sec full-width">
 <div class="cp-sec">
 <img src="" alt="">
-<p><img src="" alt="">Copyright 2021</p>
+<p><img src="logo.png" style="width:130px; height:130px" alt="Logo">Copyright 2021</p>
 </div>
 </div>
 </div>
 </div>
 <div class="col-lg-6 col-md-8 no-pd" id="principale">
 <div class="main-ws-sec">
+<div class="posts-section" id="sezionepost">
+
+
+</div>
 <div class="post-topbar">
 <textarea style="width: 85%;background-color: #fff;height: 100px;color: #b2b2b2;font-size: 15px;border: 0;padding: 0 10px;" maxlength="500" placeholder="Inserisci il testo del messaggio" id="messaggio"></textarea>
 <div class="post-st">
@@ -632,10 +638,6 @@ Miei post
 <li><button style="float: center;color: #fff;background-color: #e44d3a;height: 40px;padding: 0 10px;text-align: center;font-size: 14px;border: 0;margin-left: 10px;cursor: pointer;font-weight: 600;" onclick="invia()" id="invia">INVIA</button></li>
 </ul>
 </div>
-</div>
-<div class="posts-section" id="sezionepost">
-
-
 </div>
 </div>
 </div>
