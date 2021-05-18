@@ -499,6 +499,11 @@ var info;
         window.location.href="message.php?user="+username;
     }
     
+    window.addEventListener('beforeunload', function () {
+        var todayTime = new Date();
+        localStorage.setItem("data", todayTime);
+    });
+    
 </script>
 
 </head>
@@ -507,9 +512,6 @@ var info;
 <header>
 <div class="container">
 <div class="header-data">
-<div class="logo">
-<a href="homepage.php" title=""><img src="" alt=""></a>
-</div>
 <div class="search-bar">
 <form>
 <input type="text" list="nomiutente" name="search" id="search" autocomplete="off" oninput="autocomplet()" placeholder="Cerca">
@@ -614,7 +616,7 @@ Miei post
 <div class="tags-sec full-width">
 <div class="cp-sec">
 <img src="" alt="">
-<p><img src="" alt="">Copyright 2021</p>
+<p><img src="logo.png" style="width:130px; height:130px" alt="Logo">Copyright 2021</p>
 </div>
 </div>
 </div>
@@ -659,10 +661,10 @@ Miei post
 <form>
 <div class="row">
 <div class="col-lg-12">
-<input type="text" id="titolo" placeholder="Titolo">
+<input type="text" id="titolo" maxlength="100" placeholder="Titolo">
 </div>
 <div class="col-lg-12">
-<textarea id="descrizione" placeholder="Descrizione"></textarea>
+<textarea id="descrizione" maxlength="300" placeholder="Descrizione"></textarea>
 </div>
 <div class="col-lg-12">
 <ul>

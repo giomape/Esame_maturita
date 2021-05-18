@@ -21,7 +21,7 @@
                     <div class="brand header-brand">
                         <h1 class="m-0">
 							<a href="#">
-								<img class="header-logo-image" src="dist/images/logo.svg" alt="Logo">
+								<img class="header-logo-image" style="width:240px; height:240px" src="logo.png" alt="Logo">
                             </a>
                         </h1>
                     </div>
@@ -120,7 +120,7 @@
                 <div class="site-footer-inner">
                     <div class="brand footer-brand">
 						<a href="#">
-							<img class="header-logo-image" src="dist/images/logo.svg" alt="Logo">
+							<img class="header-logo-image" src="logo.png" style="width:170px; height:170px" alt="Logo">
 						</a>
                     </div>
                     <ul class="footer-links list-reset">
