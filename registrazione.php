@@ -491,7 +491,7 @@
           <select name="res" id="res" style="width: calc(100% - 13px);display: none;"><br>
           </select>
           </div>
-          <input type="button" value="Cerca indirizzo" onclick="getAddress()">
+          <input type="button" value="Cerca indirizzo (obbligatorio)" onclick="getAddress()">
           <div class="foot-type" style="text-align: center;" id="footdiv">
             <hr>
             <h3 style="text-align: center;">Piede preferito</h3><br>
