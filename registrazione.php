@@ -422,6 +422,7 @@
             return;
           } 
           else {
+            vai=false;
           }
         }
         function minuscolo(){
