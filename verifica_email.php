@@ -55,6 +55,9 @@
             }
             xhr.send();
           }
+          else{
+            window.location.href="login.php";
+          }
         }
     </script>
   </head>
