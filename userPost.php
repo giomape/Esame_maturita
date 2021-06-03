@@ -516,7 +516,7 @@ Miei post
 <i class="fas fa-angle-down"></i>
 </div>
 <div class="user-account-settingss" id="users">
-<h3 class="tc"><a href="logout.php">Logout</a></h3>
+<h3 class="tc"><a href="logout.php">Logout <i class="fas fa-sign-out-alt"></i></a></h3>
 </div>
 </div>
 </div>
